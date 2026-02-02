@@ -14,7 +14,7 @@ const Hero = () => {
       </div>
       <div className="flex m-5 gap-1 md:w-100 lg:w-140">
         {/* search bar */}
-        <div className="border rounded py-2 px-3 flex items-center gap-1 overflow-hidden max-w-75 md:max-w-none w-full">
+        <div className="border bg-white rounded py-2 px-3 flex items-center gap-1 overflow-hidden max-w-75 md:max-w-none w-full">
           <IoIosSearch className="h-5 w-5 text-gray-400" />
           <input
             type="text"
@@ -36,7 +36,9 @@ const Hero = () => {
         </h3>
         <div className="bg-white min-h-60 lg:h-80 rounded-tr-xl rounded-b-xl"></div>
       </div>
+       
     </div>
+    
   );
 };
 
