@@ -6,7 +6,7 @@ const Hero = () => {
       <div className="flex flex-col items-center">
         <h1 className="calistoga text-6xl md:text-7xl lg:text-8xl">
           <span className="text-primary">Nex</span>
-          <span className="malachite">Link</span>
+          <span className="text-malachite">Link</span>
         </h1>
         <h2 className="caladea m-[-10] md:text-lg lg:text-2xl">
           Build your next link.
@@ -36,9 +36,7 @@ const Hero = () => {
         </h3>
         <div className="bg-white min-h-60 lg:h-80 rounded-tr-xl rounded-b-xl"></div>
       </div>
-       
     </div>
-    
   );
 };
 
