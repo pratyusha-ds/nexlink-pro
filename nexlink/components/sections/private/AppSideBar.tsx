@@ -22,6 +22,8 @@ import Logo from "@/public/Logo";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const items = [
     {
@@ -31,12 +33,12 @@ const items = [
     },
     {
         title: "Apply",
-        url: "#",
+        url: "/create",
         icon: Briefcase,
     },
     {
         title: "Search",
-        url: "#",
+        url: "/search",
         icon: Search,
     },
     {
@@ -46,12 +48,44 @@ const items = [
     },
 ]
 
+export function HeaderAvatar(){
+    const { openUserProfile } = useClerk();
+    const { isLoaded, session } = useSession();
+    const fullname = `${session?.user?.firstName} ${session?.user?.lastName}`;
+    const email = `${session?.user?.primaryEmailAddress}`
+
+    if(!isLoaded)
+        return(
+    <SidebarMenuItem className="p-4 rounded-2xl flex justify-center">
+        <div className="flex items-center gap-4">
+            <Skeleton className="h-8 w-8 rounded-full" />
+            <div className="space-y-2">
+                <Skeleton className="h-4 w-[150px]" />
+                <Skeleton className="h-4 w-[100px]" />
+            </div>
+        </div>
+    </SidebarMenuItem>
+    );
+
+    return(
+        <SidebarMenuItem className="p-4 rounded-2xl flex justify-center">
+            <Button variant={"secondary"} className="w-full h-full cursor-pointer p-4" onClick={()=>openUserProfile()}>
+                <UserAvatar name={fullname}></UserAvatar>
+                <div className="flex flex-col justify-start">
+                    <span className="text-start">{fullname}</span>
+                    <span className="text-start text-[0.6rem]">{email}</span>
+                </div>
+            </Button>
+        </SidebarMenuItem>
+    );
+}
+
 export function AppSidebar() {
     const pathname = usePathname();
-    const { openUserProfile, signOut } = useClerk();
-    const { session } = useSession();
+    const { signOut } = useClerk();
     const [open, setOpen] = useState(false);
-    const fullname = `${session?.user?.firstName} ${session?.user?.lastName}`
+    
+
   return (
     <Sidebar className="border-malachite">
       <SidebarHeader>
@@ -63,18 +97,10 @@ export function AppSidebar() {
                     Dashboard
                 </span>
             </div>
-            <SidebarSeparator />
-            <SidebarMenuItem className="p-4 rounded-2xl flex justify-center">
-                <Button variant={"secondary"} className="w-full h-full cursor-pointer border border-malachite" onClick={()=>openUserProfile()}>
-                    <UserAvatar name={fullname}></UserAvatar>
-                    <span>{fullname}</span>
-                </Button>
-            </SidebarMenuItem>
         </SidebarMenu>
-      </SidebarHeader>
-
-      <SidebarContent>
         <SidebarSeparator />
+      </SidebarHeader>
+      <SidebarContent>
         <SidebarGroup>
             <SidebarGroupLabel className="text-primary">Application</SidebarGroupLabel>
             <SidebarGroupContent>
@@ -87,10 +113,10 @@ export function AppSidebar() {
                             : ""
                         )}>
                             <SidebarMenuButton asChild>
-                                <a href={item.url}>
+                                <Link href={item.url}>
                                     <item.icon className="text-primary" />
                                     <span>{item.title}</span>
-                                </a>
+                                </Link>
                             </SidebarMenuButton>
                         </SidebarMenuItem>
                     ))}
@@ -128,7 +154,8 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        {/* Insert Contet */}
+        <SidebarSeparator />
+        <HeaderAvatar />
       </SidebarFooter>
     </Sidebar>
   )
