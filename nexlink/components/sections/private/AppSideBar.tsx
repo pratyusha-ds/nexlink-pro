@@ -13,11 +13,12 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarSeparator,
 } from "@/components/ui/sidebar"
 import { cn } from "@/lib/utils";
 import { useClerk, useSession } from "@clerk/nextjs";
 import { Home, Briefcase, Search, Settings, LogOut } from "lucide-react";
-import Link from "next/link";
+import Logo from "@/public/Logo";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -54,17 +55,27 @@ export function AppSidebar() {
   return (
     <Sidebar className="border-malachite">
       <SidebarHeader>
-        <SidebarMenu>
-            <SidebarMenuItem className="p-4 rounded-2xl">
-                <SidebarMenuButton onClick={()=>openUserProfile()}>
+        <SidebarMenu className="flex ">
+            <div className="p-4 flex items-center gap-4">
+                <Logo />
+                <span className="calistoga tracking-widest">
+                    <p><span className="text-primary">Nex</span><span className="text-malachite">Link</span></p> 
+                    Dashboard
+                </span>
+            </div>
+            <SidebarSeparator />
+            <SidebarMenuItem className="p-4 rounded-2xl flex justify-center">
+                <Button variant={"secondary"} className="w-full h-full cursor-pointer border border-malachite" onClick={()=>openUserProfile()}>
                     <UserAvatar name={fullname}></UserAvatar>
                     <span>{fullname}</span>
-                </SidebarMenuButton>
+                </Button>
             </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
+
       <SidebarContent>
-        <SidebarGroup />
+        <SidebarSeparator />
+        <SidebarGroup>
             <SidebarGroupLabel className="text-primary">Application</SidebarGroupLabel>
             <SidebarGroupContent>
                 <SidebarMenu>
@@ -114,7 +125,7 @@ export function AppSidebar() {
                     </Dialog>
                 </SidebarMenu>
             </SidebarGroupContent>
-        <SidebarGroup />
+        </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
         {/* Insert Contet */}
