@@ -52,7 +52,7 @@ export function AppSidebar() {
     const [open, setOpen] = useState(false);
     const fullname = `${session?.user?.firstName} ${session?.user?.lastName}`
   return (
-    <Sidebar>
+    <Sidebar className="border-malachite">
       <SidebarHeader>
         <SidebarMenu>
             <SidebarMenuItem className="p-4 rounded-2xl">
@@ -65,7 +65,7 @@ export function AppSidebar() {
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup />
-            <SidebarGroupLabel>Application</SidebarGroupLabel>
+            <SidebarGroupLabel className="text-primary">Application</SidebarGroupLabel>
             <SidebarGroupContent>
                 <SidebarMenu>
                     {items.map((item)=>(
@@ -77,7 +77,7 @@ export function AppSidebar() {
                         )}>
                             <SidebarMenuButton asChild>
                                 <a href={item.url}>
-                                    <item.icon />
+                                    <item.icon className="text-primary" />
                                     <span>{item.title}</span>
                                 </a>
                             </SidebarMenuButton>
@@ -117,6 +117,7 @@ export function AppSidebar() {
         <SidebarGroup />
       </SidebarContent>
       <SidebarFooter>
+        {/* Insert Contet */}
       </SidebarFooter>
     </Sidebar>
   )
