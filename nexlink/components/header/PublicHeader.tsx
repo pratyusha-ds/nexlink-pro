@@ -4,10 +4,10 @@ import Logo from "@/public/Logo";
 import {
   SignInButton,
   useSession,
-  SignOutButton,
   UserButton,
 } from "@clerk/nextjs";
 import { Button } from "../ui/button";
+import { redirect } from "next/navigation";
 
 const PublicHeader = () => {
   const { isSignedIn, isLoaded } = useSession();
@@ -17,7 +17,6 @@ const PublicHeader = () => {
       {/* left */}
       <Logo />
       {/* right */}
-      <div className="flex gap-6">
         {!isSignedIn ? (
           <SignInButton mode="modal">
             <button className="font-bold text-white bg-malachite text-sm px-3 py-2 rounded-md">
@@ -25,9 +24,13 @@ const PublicHeader = () => {
             </button>
           </SignInButton>
         ) : (
-          <UserButton />
+          <div className="flex items-center gap-4">
+            <UserButton />
+            <Button variant={"secondary"} onClick={()=>redirect("/dashboard")} className="border cursor-pointer">
+              Dashboard
+            </Button>
+          </div>
         )}
-      </div>
     </nav>
   );
 };

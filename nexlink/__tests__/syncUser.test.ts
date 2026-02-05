@@ -1,6 +1,6 @@
 import { expect, test, vi, beforeEach, describe } from "vitest";
 import { syncUser } from "@/lib/sync-user";
-import { db } from "@/lib/db";
+import { db } from "@/lib/prisma";
 import { currentUser } from "@clerk/nextjs/server";
 
 vi.mock("@clerk/nextjs/server", () => ({
