@@ -1,3 +1,5 @@
+import ApplicationForm from "@/components/sections/private/application/ApplicationForm";
+
 export default function CreateApplicationPage() {
   return (
     <div className="flex-1 w-full min-h-svh py-10 px-6 flex flex-col items-center justify-center">
@@ -10,7 +12,9 @@ export default function CreateApplicationPage() {
             Fill in the details manually or search for a company to auto-fill.
           </p>
         </div>
-        <div className="w-full">{/* <ApplicationForm /> */}</div>
+        <div className="w-full">
+          <ApplicationForm />
+        </div>
       </div>
     </div>
   );

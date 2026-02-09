@@ -10,6 +10,9 @@ import {
   type ApplicationFormValues,
 } from "@/lib/validations/application";
 
+import CompanySection from "./CompanySection";
+import StatusSection from "./StatusSection";
+
 export default function ApplicationForm() {
   const form = useForm<ApplicationFormValues>({
     resolver: zodResolver(applicationSchema),
@@ -36,8 +39,8 @@ export default function ApplicationForm() {
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          {/* <CompanySection form={form} /> */}
-          {/* <StatusSection form={form} /> */}
+          <CompanySection form={form} />
+          <StatusSection form={form} />
           {/* <DocumentSection form={form} /> */}
 
           <Button
