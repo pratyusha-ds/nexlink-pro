@@ -103,6 +103,25 @@ exports.Prisma.UserScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.ApplicationScalarFieldEnum = {
+  id: 'id',
+  companyName: 'companyName',
+  jobTitle: 'jobTitle',
+  status: 'status',
+  website: 'website',
+  jobUrl: 'jobUrl',
+  description: 'description',
+  email: 'email',
+  location: 'location',
+  type: 'type',
+  notes: 'notes',
+  interviewDnT: 'interviewDnT',
+  salary: 'salary',
+  logoUrl: 'logoUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -117,10 +136,23 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.ApplicationStatus = exports.$Enums.ApplicationStatus = {
+  PENDING: 'PENDING',
+  APPLIED: 'APPLIED',
+  BEING_PROCESSED: 'BEING_PROCESSED',
+  WAITING_FOR_INTERVIEW: 'WAITING_FOR_INTERVIEW',
+  REJECTED: 'REJECTED'
+};
 
+exports.ApplicationType = exports.$Enums.ApplicationType = {
+  REMOTE: 'REMOTE',
+  ON_SITE: 'ON_SITE',
+  HYBRID: 'HYBRID'
+};
 
 exports.Prisma.ModelName = {
-  User: 'User'
+  User: 'User',
+  Application: 'Application'
 };
 /**
  * Create the Client
@@ -130,10 +162,10 @@ const config = {
   "clientVersion": "7.3.0",
   "engineVersion": "9d6ad21cbbceab97458517b147a6a09ff43aa735",
   "activeProvider": "postgresql",
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel User {\n  id         String   @id @default(cuid())\n  clerkId    String   @unique\n  email      String   @unique\n  firstName  String?\n  middleName String?\n  lastName   String?\n  createdAt  DateTime @default(now())\n  updatedAt  DateTime @updatedAt\n\n  @@map(\"users\")\n}\n"
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\n// Enum for status\nenum ApplicationStatus {\n  PENDING\n  APPLIED\n  BEING_PROCESSED\n  WAITING_FOR_INTERVIEW\n  REJECTED\n}\n\n// Enum for type\nenum ApplicationType {\n  REMOTE\n  ON_SITE\n  HYBRID\n}\n\nmodel User {\n  id         String   @id @default(cuid())\n  clerkId    String   @unique\n  email      String   @unique\n  firstName  String?\n  middleName String?\n  lastName   String?\n  createdAt  DateTime @default(now())\n  updatedAt  DateTime @updatedAt\n\n  @@map(\"users\")\n}\n\nmodel Application {\n  id           Int               @id @default(autoincrement())\n  companyName  String\n  jobTitle     String\n  status       ApplicationStatus\n  website      String?\n  jobUrl       String?\n  description  String\n  email        String\n  location     String\n  type         ApplicationType\n  notes        String?\n  interviewDnT DateTime?\n  salary       String?\n  logoUrl      String?\n  createdAt    DateTime          @default(now())\n  updatedAt    DateTime          @updatedAt\n}\n"
 }
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"clerkId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"firstName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"middleName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"lastName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":\"users\"}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"clerkId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"firstName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"middleName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"lastName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":\"users\"},\"Application\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"companyName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"jobTitle\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"ApplicationStatus\"},{\"name\":\"website\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"jobUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"location\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"enum\",\"type\":\"ApplicationType\"},{\"name\":\"notes\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"interviewDnT\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"salary\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"logoUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.compilerWasm = {
   getRuntime: async () => require('./query_compiler_fast_bg.js'),

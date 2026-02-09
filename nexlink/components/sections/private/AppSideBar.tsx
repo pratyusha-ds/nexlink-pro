@@ -24,6 +24,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useTheme } from "next-themes";
 
 const items = [
     {
@@ -53,6 +54,7 @@ export function HeaderAvatar(){
     const { isLoaded, session } = useSession();
     const fullname = `${session?.user?.firstName} ${session?.user?.lastName}`;
     const email = `${session?.user?.primaryEmailAddress}`
+    
 
     if(!isLoaded)
         return(
@@ -84,7 +86,7 @@ export function AppSidebar() {
     const pathname = usePathname();
     const { signOut } = useClerk();
     const [open, setOpen] = useState(false);
-    
+    const { setTheme } = useTheme();
 
   return (
     <Sidebar className="border-malachite">
@@ -138,12 +140,19 @@ export function AppSidebar() {
                             <p>Are you sure you want to log out?</p>
                             <DialogFooter className="flex justify-center gap-2">
                                 <Button 
-                                onClick={()=>setOpen(false)}>
+                                onClick={()=>setOpen(false)}
+                                className="cursor-pointer">
                                     Cancel
                                 </Button>
                                 <Button 
+                                className="cursor-pointer"
                                 variant={"destructive"}
-                                onClick={()=> signOut({redirectUrl: "/"})}>
+                                onClick={()=> {
+                                    setTheme("light");
+                                    signOut({redirectUrl: "/"});
+
+                                }}
+                                >
                                     LogOut
                                 </Button>
                             </DialogFooter>
