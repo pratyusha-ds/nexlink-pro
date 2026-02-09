@@ -152,6 +152,38 @@ export default function CompanySection({
         )}
       />
 
+      <FormField
+        control={form.control}
+        name="logoUrl"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Company Logo URL</FormLabel>
+            <FormControl>
+              <Input
+                placeholder="https://logo.com/logo.png"
+                {...field}
+                value={field.value ?? ""}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        control={form.control}
+        name="notes"
+        render={({ field }) => (
+          <FormItem className="md:col-span-2">
+            <FormLabel>Notes</FormLabel>
+            <FormControl>
+              <Textarea rows={3} {...field} value={field.value ?? ""} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
       <div className="md:col-span-2">
         <FormField
           control={form.control}
