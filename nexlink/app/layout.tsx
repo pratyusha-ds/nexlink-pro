@@ -29,7 +29,7 @@ export default function RootLayout({
         },
       }}
     >
-      <html lang="en">
+      <html lang="en" suppressHydrationWarning>
         <body
           className={`${inter.variable} ${calistoga.variable} ${caladea.variable} antialiased`}
         >
