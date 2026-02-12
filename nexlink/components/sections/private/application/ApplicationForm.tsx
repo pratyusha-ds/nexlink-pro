@@ -13,6 +13,7 @@ import {
 import CompanySection from "./CompanySection";
 import StatusSection from "./StatusSection";
 
+// TODO: add a server call for the user application
 export default function ApplicationForm() {
   const form = useForm<ApplicationFormValues>({
     resolver: zodResolver(applicationSchema),
@@ -32,8 +33,8 @@ export default function ApplicationForm() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white rounded-xl shadow-sm border border-slate-100">
-      <h2 className="text-2xl font-bold text-slate-800 mb-6">
+    <div className="w-full p-4 bg-white rounded-md shadow-sm border border-slate-100">
+      <h2 className="text-xl md:text-2xl font-bold text-slate-800 mb-6">
         Application Form
       </h2>
 

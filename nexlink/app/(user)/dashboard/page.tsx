@@ -37,8 +37,8 @@ const recentActivities = [
 
 export default function DashboardPage() {
   return (
-    <div className="p-8 space-y-8">
-      <h1 className="text-3xl font-bold">Dashboard</h1>
+    <div className="pt-24 py-4 md:pt-10 px-6 space-y-4">
+      <h1 className="text-xl md:text-3xl font-bold">Dashboard</h1>
 
       <StatsCards />
 
