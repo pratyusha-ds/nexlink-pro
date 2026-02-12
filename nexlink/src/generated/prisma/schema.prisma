@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// Enum for status
+enum ApplicationStatus {
+  PENDING
+  APPLIED
+  BEING_PROCESSED
+  WAITING_FOR_INTERVIEW
+  REJECTED
+}
+
+// Enum for type
+enum ApplicationType {
+  REMOTE
+  ON_SITE
+  HYBRID
+}
+
+model User {
+  id         String   @id @default(cuid())
+  clerkId    String   @unique
+  email      String   @unique
+  firstName  String?
+  middleName String?
+  lastName   String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Application {
+  id           Int               @id @default(autoincrement())
+  companyName  String
+  jobTitle     String
+  status       ApplicationStatus
+  website      String?
+  jobUrl       String?
+  description  String
+  email        String
+  location     String
+  type         ApplicationType
+  notes        String?
+  interviewDnT DateTime?
+  salary       String?
+  logoUrl      String?
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+}
