@@ -44,12 +44,14 @@ export default function ApplicationForm() {
           <StatusSection form={form} />
           {/* <DocumentSection form={form} /> */}
 
-          <Button
-            variant="default"
-            className="bg-green-700 hover:bg-green-800 text-white w-full py-6"
-          >
-            Save Application
-          </Button>
+          <div className="flex items-center justify-center">
+              <Button
+              variant="default"
+              className="self-center bg-green-700 hover:bg-green-800 text-white w-[15%] max-sm:w-full py-6"
+            >
+                Save Application
+            </Button>
+          </div>
         </form>
       </Form>
     </div>

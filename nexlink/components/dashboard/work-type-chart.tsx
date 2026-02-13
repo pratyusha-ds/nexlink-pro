@@ -8,18 +8,26 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { ApplicationType } from "@/src/generated/prisma";
 
-const chartData = [
-  { type: "REMOTE", count: 24 },
-  { type: "HYBRID", count: 12 },
-  { type: "ON_SITE", count: 5 },
-];
+interface WorkTypeBarProps {
+  data: {
+    name: ApplicationType;
+    value: number;
+  }[];
+}
 
 const chartConfig = {
-  count: { label: "Applications", color: "#16DB65" },
+  value: { label: "Applications", color: "#16DB65" },
 } satisfies ChartConfig;
 
-export function WorkTypeBar() {
+export function WorkTypeBar({ data }: WorkTypeBarProps) {
+  // Transform the data to match the chart format
+  const chartData = data.map(item => ({
+    type: item.name,
+    count: item.value
+  }));
+
   return (
     <Card className="border-none shadow-none bg-transparent">
       <CardHeader>
