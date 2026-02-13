@@ -1,6 +1,5 @@
 "use client";
 
-import ApplicationForm from "@/components/sections/private/application/ApplicationForm";
 import { Application, columns } from "@/components/tables/applications/columns";
 import { DataTable } from "@/components/tables/DataTable";
 import { Button } from "@/components/ui/button";
