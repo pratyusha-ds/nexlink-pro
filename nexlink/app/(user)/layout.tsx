@@ -7,11 +7,12 @@ import { redirect } from "next/navigation";
 import { ReactNode } from "react";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import UserHeader from "@/components/header/UserHeader";
+import { syncUser } from "@/lib/sync-user";
 
 const Layout = async ({ children }: { children: ReactNode }) => {
   const { userId } = await auth();
   if (!userId) redirect("/");
-
+  await syncUser();
   return (
     <>
       <ThemeProvider attribute="class" defaultTheme="light">
