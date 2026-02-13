@@ -1,6 +1,6 @@
 "use client";
 
-import { Bar, BarChart, XAxis, YAxis, CartesianGrid } from "recharts";
+import { Bar, BarChart, XAxis, CartesianGrid } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   ChartConfig,
@@ -8,26 +8,17 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { ApplicationType } from "@/src/generated/prisma";
-
-interface WorkTypeBarProps {
-  data: {
-    name: ApplicationType;
-    value: number;
-  }[];
-}
 
 const chartConfig = {
   value: { label: "Applications", color: "#16DB65" },
 } satisfies ChartConfig;
 
-export function WorkTypeBar({ data }: WorkTypeBarProps) {
-  // Transform the data to match the chart format
-  const chartData = data.map(item => ({
-    type: item.name,
-    count: item.value
-  }));
+interface WorkTypeData {
+  name: string;
+  value: number;
+}
 
+export function WorkTypeBar({ data }: { data: WorkTypeData[] }) {
   return (
     <Card className="border-none shadow-none bg-transparent">
       <CardHeader>
@@ -35,22 +26,22 @@ export function WorkTypeBar({ data }: WorkTypeBarProps) {
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="aspect-4/3 w-full">
-          <BarChart data={chartData} margin={{ top: 20 }}>
+          <BarChart data={data} margin={{ top: 20 }}>
             <CartesianGrid
               vertical={false}
               strokeDasharray="3 3"
               opacity={0.5}
             />
             <XAxis
-              dataKey="type"
+              dataKey="name"
               tickLine={false}
               axisLine={false}
               tickFormatter={(value) => value.replace("_", " ")}
             />
             <ChartTooltip content={<ChartTooltipContent />} />
             <Bar
-              dataKey="count"
-              fill="var(--color-count)"
+              dataKey="value"
+              fill="var(--color-value)"
               radius={[4, 4, 0, 0]}
               barSize={40}
             />
