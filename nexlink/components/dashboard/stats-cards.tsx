@@ -1,38 +1,44 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Briefcase, Send, Target, XCircle } from "lucide-react";
 
-const stats = [
-  {
-    title: "Total",
-    value: "42",
-    change: "+5",
-    icon: Briefcase,
-    color: "text-blue-600",
-  },
-  {
-    title: "Applied",
-    value: "15",
-    change: "+12",
-    icon: Send,
-    color: "text-[#16DB65]",
-  },
-  {
-    title: "Interviews",
-    value: "4",
-    change: "+1",
-    icon: Target,
-    color: "text-amber-500",
-  },
-  {
-    title: "Rejected",
-    value: "10",
-    change: "+2",
-    icon: XCircle,
-    color: "text-red-500",
-  },
-];
+interface StatusStat {
+  name: string;
+  total: number;
+}
 
-export function StatsCards() {
+export function StatsCards({ data }: { data: StatusStat[] }) {
+  const getCount = (statusName: string) =>
+    data.find((s) => s.name === statusName)?.total || 0;
+
+  const totalApps = data.reduce((acc, curr) => acc + curr.total, 0);
+
+  const stats = [
+    {
+      title: "Total",
+      value: totalApps.toString(),
+      icon: Briefcase,
+      color: "text-blue-600",
+    },
+    {
+      title: "Applied",
+      value: getCount("APPLIED").toString(),
+      icon: Send,
+      color: "text-[#16DB65]",
+    },
+    {
+      title: "Interviews",
+      value: getCount("WAITING FOR INTERVIEW").toString(),
+      icon: Target,
+      color: "text-amber-500",
+    },
+    {
+      title: "Rejected",
+      value: getCount("REJECTED").toString(),
+      icon: XCircle,
+      color: "text-red-500",
+    },
+  ];
+
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       {stats.map((stat) => (
@@ -43,9 +49,7 @@ export function StatsCards() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stat.value}</div>
-            <p className="text-xs text-muted-foreground">
-              {stat.change} from last week
-            </p>
+            <p className="text-xs text-muted-foreground">Updated just now</p>
           </CardContent>
         </Card>
       ))}
