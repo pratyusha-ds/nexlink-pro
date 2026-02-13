@@ -1,6 +1,6 @@
-//import { StatusPie } from "@/components/dashboard/status-pie-chart";
+import { StatusPie } from "@/components/dashboard/status-pie-chart";
 import { WorkTypeBar } from "@/components/dashboard/work-type-chart";
-//import { StatsCards } from "@/components/dashboard/stats-cards";
+import { StatsCards } from "@/components/dashboard/stats-cards";
 import {
   getRecentApplications,
   getStatusStats,
@@ -26,12 +26,11 @@ export default async function DashboardPage() {
     <div className="pt-24 py-4 md:pt-10 px-6 space-y-4">
       <h1 className="text-xl md:text-3xl font-bold">Dashboard</h1>
 
-      {/* <StatsCards data={statusStats} /> */}
+      <StatsCards data={statusStats} />
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {/* // <StatusPie data={statusStats} /> */}
+        <StatusPie data={statusStats} />
         <WorkTypeBar data={typeStats} />
-
         <div className="bg-white p-6 rounded-xl border shadow-sm">
           <h3 className="font-semibold mb-4">Recent Activity</h3>
           <div className="space-y-4">

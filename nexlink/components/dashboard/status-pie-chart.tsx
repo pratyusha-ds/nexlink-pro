@@ -11,20 +11,8 @@ import {
   ChartLegendContent,
 } from "@/components/ui/chart";
 
-const chartData = [
-  { status: "APPLIED", count: 15, fill: "var(--color-APPLIED)" },
-  { status: "BEING_PROCESSED", count: 8, fill: "var(--color-BEING_PROCESSED)" },
-  {
-    status: "WAITING_FOR_INTERVIEW",
-    count: 4,
-    fill: "var(--color-WAITING_FOR_INTERVIEW)",
-  },
-  { status: "REJECTED", count: 10, fill: "var(--color-REJECTED)" },
-  { status: "PENDING", count: 5, fill: "var(--color-PENDING)" },
-];
-
 const chartConfig = {
-  count: { label: "Apps" },
+  total: { label: "Apps" },
   APPLIED: { label: "Applied", color: "#16DB65" },
   BEING_PROCESSED: { label: "Processing", color: "#3b82f6" },
   WAITING_FOR_INTERVIEW: { label: "Interviews", color: "#f59e0b" },
@@ -32,7 +20,19 @@ const chartConfig = {
   PENDING: { label: "Pending", color: "#94a3b8" },
 } satisfies ChartConfig;
 
-export function StatusPie() {
+export function StatusPie({ data }: { data: any[] }) {
+  const formattedData = data.map((item) => {
+    const configKey = item.name.replace(/\s+/g, "_");
+    const configEntry = chartConfig[configKey as keyof typeof chartConfig];
+
+    return {
+      status: configKey,
+      total: item.total,
+      fill:
+        configEntry && "color" in configEntry ? configEntry.color : "#94a3b8",
+    };
+  });
+
   return (
     <Card className="flex flex-col border-none shadow-none bg-transparent">
       <CardHeader className="items-center pb-0">
@@ -46,13 +46,13 @@ export function StatusPie() {
           <PieChart>
             <ChartTooltip content={<ChartTooltipContent hideLabel />} />
             <Pie
-              data={chartData}
-              dataKey="count"
+              data={formattedData}
+              dataKey="total"
               nameKey="status"
               innerRadius={40}
               strokeWidth={5}
             >
-              {chartData.map((entry, index) => (
+              {formattedData.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={entry.fill} />
               ))}
             </Pie>
