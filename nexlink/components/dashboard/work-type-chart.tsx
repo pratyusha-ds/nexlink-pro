@@ -1,6 +1,6 @@
 "use client";
 
-import { Bar, BarChart, XAxis, YAxis, CartesianGrid } from "recharts";
+import { Bar, BarChart, XAxis, CartesianGrid } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   ChartConfig,
@@ -9,17 +9,16 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-const chartData = [
-  { type: "REMOTE", count: 24 },
-  { type: "HYBRID", count: 12 },
-  { type: "ON_SITE", count: 5 },
-];
-
 const chartConfig = {
-  count: { label: "Applications", color: "#16DB65" },
+  value: { label: "Applications", color: "#16DB65" },
 } satisfies ChartConfig;
 
-export function WorkTypeBar() {
+interface WorkTypeData {
+  name: string;
+  value: number;
+}
+
+export function WorkTypeBar({ data }: { data: WorkTypeData[] }) {
   return (
     <Card className="border-none shadow-none bg-transparent">
       <CardHeader>
@@ -27,22 +26,22 @@ export function WorkTypeBar() {
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="aspect-4/3 w-full">
-          <BarChart data={chartData} margin={{ top: 20 }}>
+          <BarChart data={data} margin={{ top: 20 }}>
             <CartesianGrid
               vertical={false}
               strokeDasharray="3 3"
               opacity={0.5}
             />
             <XAxis
-              dataKey="type"
+              dataKey="name"
               tickLine={false}
               axisLine={false}
               tickFormatter={(value) => value.replace("_", " ")}
             />
             <ChartTooltip content={<ChartTooltipContent />} />
             <Bar
-              dataKey="count"
-              fill="var(--color-count)"
+              dataKey="value"
+              fill="var(--color-value)"
               radius={[4, 4, 0, 0]}
               barSize={40}
             />
