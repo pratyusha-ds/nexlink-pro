@@ -133,6 +133,7 @@ exports.Prisma.UserScalarFieldEnum = {
 
 exports.Prisma.ApplicationScalarFieldEnum = {
   id: 'id',
+  userId: 'userId',
   companyName: 'companyName',
   jobTitle: 'jobTitle',
   status: 'status',
