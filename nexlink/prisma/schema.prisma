@@ -32,6 +32,7 @@ model User {
   lastName    String?             
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  applications Application[]
 
   applications Application[]
 
@@ -40,6 +41,7 @@ model User {
 
 model Application {
   id            Int      @id @default(autoincrement())
+  userId        String
   companyName   String
   jobTitle      String
   status        ApplicationStatus
@@ -55,8 +57,8 @@ model Application {
   logoUrl       String?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
-  userId        String
-  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  user          User    @relation(fields: [userId], references: [id])
 
   @@map("applications")
 }

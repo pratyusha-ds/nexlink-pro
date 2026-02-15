@@ -10,10 +10,11 @@ import {
   type ApplicationFormValues,
 } from "@/lib/validations/application";
 
+import { createApplication } from "@/lib/actions/application";
+
 import CompanySection from "./CompanySection";
 import StatusSection from "./StatusSection";
 
-// TODO: add a server call for the user application
 export default function ApplicationForm() {
   const form = useForm<ApplicationFormValues>({
     resolver: zodResolver(applicationSchema),
@@ -28,8 +29,14 @@ export default function ApplicationForm() {
     },
   });
 
-  function onSubmit(values: ApplicationFormValues) {
-    console.log(values);
+  async function onSubmit(values: ApplicationFormValues) {
+    try {
+      await createApplication(values);
+      console.log("Application created successfully.");
+      form.reset();
+    } catch (error) {
+      console.error("Failed to create application:", error);
+    }
   }
 
   return (
@@ -42,7 +49,6 @@ export default function ApplicationForm() {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <CompanySection form={form} />
           <StatusSection form={form} />
-          {/* <DocumentSection form={form} /> */}
 
           <div className="flex items-center justify-center">
               <Button

@@ -2147,6 +2147,7 @@ export namespace Prisma {
 
   export type ApplicationMinAggregateOutputType = {
     id: number | null
+    userId: string | null
     companyName: string | null
     jobTitle: string | null
     status: $Enums.ApplicationStatus | null
@@ -2167,6 +2168,7 @@ export namespace Prisma {
 
   export type ApplicationMaxAggregateOutputType = {
     id: number | null
+    userId: string | null
     companyName: string | null
     jobTitle: string | null
     status: $Enums.ApplicationStatus | null
@@ -2187,6 +2189,7 @@ export namespace Prisma {
 
   export type ApplicationCountAggregateOutputType = {
     id: number
+    userId: number
     companyName: number
     jobTitle: number
     status: number
@@ -2217,6 +2220,7 @@ export namespace Prisma {
 
   export type ApplicationMinAggregateInputType = {
     id?: true
+    userId?: true
     companyName?: true
     jobTitle?: true
     status?: true
@@ -2237,6 +2241,7 @@ export namespace Prisma {
 
   export type ApplicationMaxAggregateInputType = {
     id?: true
+    userId?: true
     companyName?: true
     jobTitle?: true
     status?: true
@@ -2257,6 +2262,7 @@ export namespace Prisma {
 
   export type ApplicationCountAggregateInputType = {
     id?: true
+    userId?: true
     companyName?: true
     jobTitle?: true
     status?: true
@@ -2364,6 +2370,7 @@ export namespace Prisma {
 
   export type ApplicationGroupByOutputType = {
     id: number
+    userId: string
     companyName: string
     jobTitle: string
     status: $Enums.ApplicationStatus
@@ -2403,6 +2410,7 @@ export namespace Prisma {
 
   export type ApplicationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    userId?: boolean
     companyName?: boolean
     jobTitle?: boolean
     status?: boolean
@@ -2418,12 +2426,12 @@ export namespace Prisma {
     logoUrl?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    userId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["application"]>
 
   export type ApplicationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    userId?: boolean
     companyName?: boolean
     jobTitle?: boolean
     status?: boolean
@@ -2439,12 +2447,12 @@ export namespace Prisma {
     logoUrl?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    userId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["application"]>
 
   export type ApplicationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    userId?: boolean
     companyName?: boolean
     jobTitle?: boolean
     status?: boolean
@@ -2460,12 +2468,12 @@ export namespace Prisma {
     logoUrl?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    userId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["application"]>
 
   export type ApplicationSelectScalar = {
     id?: boolean
+    userId?: boolean
     companyName?: boolean
     jobTitle?: boolean
     status?: boolean
@@ -2484,7 +2492,7 @@ export namespace Prisma {
     userId?: boolean
   }
 
-  export type ApplicationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "companyName" | "jobTitle" | "status" | "website" | "jobUrl" | "description" | "email" | "location" | "type" | "notes" | "interviewDnT" | "salary" | "logoUrl" | "createdAt" | "updatedAt" | "userId", ExtArgs["result"]["application"]>
+  export type ApplicationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "companyName" | "jobTitle" | "status" | "website" | "jobUrl" | "description" | "email" | "location" | "type" | "notes" | "interviewDnT" | "salary" | "logoUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["application"]>
   export type ApplicationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -2502,6 +2510,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
+      userId: string
       companyName: string
       jobTitle: string
       status: $Enums.ApplicationStatus
@@ -2943,6 +2952,7 @@ export namespace Prisma {
    */
   interface ApplicationFieldRefs {
     readonly id: FieldRef<"Application", 'Int'>
+    readonly userId: FieldRef<"Application", 'String'>
     readonly companyName: FieldRef<"Application", 'String'>
     readonly jobTitle: FieldRef<"Application", 'String'>
     readonly status: FieldRef<"Application", 'ApplicationStatus'>
@@ -3403,6 +3413,7 @@ export namespace Prisma {
 
   export const ApplicationScalarFieldEnum: {
     id: 'id',
+    userId: 'userId',
     companyName: 'companyName',
     jobTitle: 'jobTitle',
     status: 'status',
@@ -3615,6 +3626,7 @@ export namespace Prisma {
     OR?: ApplicationWhereInput[]
     NOT?: ApplicationWhereInput | ApplicationWhereInput[]
     id?: IntFilter<"Application"> | number
+    userId?: StringFilter<"Application"> | string
     companyName?: StringFilter<"Application"> | string
     jobTitle?: StringFilter<"Application"> | string
     status?: EnumApplicationStatusFilter<"Application"> | $Enums.ApplicationStatus
@@ -3630,12 +3642,12 @@ export namespace Prisma {
     logoUrl?: StringNullableFilter<"Application"> | string | null
     createdAt?: DateTimeFilter<"Application"> | Date | string
     updatedAt?: DateTimeFilter<"Application"> | Date | string
-    userId?: StringFilter<"Application"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type ApplicationOrderByWithRelationInput = {
     id?: SortOrder
+    userId?: SortOrder
     companyName?: SortOrder
     jobTitle?: SortOrder
     status?: SortOrder
@@ -3651,7 +3663,6 @@ export namespace Prisma {
     logoUrl?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    userId?: SortOrder
     user?: UserOrderByWithRelationInput
   }
 
@@ -3660,6 +3671,7 @@ export namespace Prisma {
     AND?: ApplicationWhereInput | ApplicationWhereInput[]
     OR?: ApplicationWhereInput[]
     NOT?: ApplicationWhereInput | ApplicationWhereInput[]
+    userId?: StringFilter<"Application"> | string
     companyName?: StringFilter<"Application"> | string
     jobTitle?: StringFilter<"Application"> | string
     status?: EnumApplicationStatusFilter<"Application"> | $Enums.ApplicationStatus
@@ -3675,12 +3687,12 @@ export namespace Prisma {
     logoUrl?: StringNullableFilter<"Application"> | string | null
     createdAt?: DateTimeFilter<"Application"> | Date | string
     updatedAt?: DateTimeFilter<"Application"> | Date | string
-    userId?: StringFilter<"Application"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
 
   export type ApplicationOrderByWithAggregationInput = {
     id?: SortOrder
+    userId?: SortOrder
     companyName?: SortOrder
     jobTitle?: SortOrder
     status?: SortOrder
@@ -3709,6 +3721,7 @@ export namespace Prisma {
     OR?: ApplicationScalarWhereWithAggregatesInput[]
     NOT?: ApplicationScalarWhereWithAggregatesInput | ApplicationScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Application"> | number
+    userId?: StringWithAggregatesFilter<"Application"> | string
     companyName?: StringWithAggregatesFilter<"Application"> | string
     jobTitle?: StringWithAggregatesFilter<"Application"> | string
     status?: EnumApplicationStatusWithAggregatesFilter<"Application"> | $Enums.ApplicationStatus
@@ -3829,6 +3842,7 @@ export namespace Prisma {
 
   export type ApplicationUncheckedCreateInput = {
     id?: number
+    userId: string
     companyName: string
     jobTitle: string
     status: $Enums.ApplicationStatus
@@ -3868,6 +3882,7 @@ export namespace Prisma {
 
   export type ApplicationUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
     companyName?: StringFieldUpdateOperationsInput | string
     jobTitle?: StringFieldUpdateOperationsInput | string
     status?: EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
@@ -3888,6 +3903,7 @@ export namespace Prisma {
 
   export type ApplicationCreateManyInput = {
     id?: number
+    userId: string
     companyName: string
     jobTitle: string
     status: $Enums.ApplicationStatus
@@ -3926,6 +3942,7 @@ export namespace Prisma {
 
   export type ApplicationUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
     companyName?: StringFieldUpdateOperationsInput | string
     jobTitle?: StringFieldUpdateOperationsInput | string
     status?: EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
@@ -4126,6 +4143,7 @@ export namespace Prisma {
 
   export type ApplicationCountOrderByAggregateInput = {
     id?: SortOrder
+    userId?: SortOrder
     companyName?: SortOrder
     jobTitle?: SortOrder
     status?: SortOrder
@@ -4150,6 +4168,7 @@ export namespace Prisma {
 
   export type ApplicationMaxOrderByAggregateInput = {
     id?: SortOrder
+    userId?: SortOrder
     companyName?: SortOrder
     jobTitle?: SortOrder
     status?: SortOrder
@@ -4170,6 +4189,7 @@ export namespace Prisma {
 
   export type ApplicationMinOrderByAggregateInput = {
     id?: SortOrder
+    userId?: SortOrder
     companyName?: SortOrder
     jobTitle?: SortOrder
     status?: SortOrder
@@ -4593,6 +4613,7 @@ export namespace Prisma {
     OR?: ApplicationScalarWhereInput[]
     NOT?: ApplicationScalarWhereInput | ApplicationScalarWhereInput[]
     id?: IntFilter<"Application"> | number
+    userId?: StringFilter<"Application"> | string
     companyName?: StringFilter<"Application"> | string
     jobTitle?: StringFilter<"Application"> | string
     status?: EnumApplicationStatusFilter<"Application"> | $Enums.ApplicationStatus
@@ -4608,7 +4629,6 @@ export namespace Prisma {
     logoUrl?: StringNullableFilter<"Application"> | string | null
     createdAt?: DateTimeFilter<"Application"> | Date | string
     updatedAt?: DateTimeFilter<"Application"> | Date | string
-    userId?: StringFilter<"Application"> | string
   }
 
   export type UserCreateWithoutApplicationsInput = {
