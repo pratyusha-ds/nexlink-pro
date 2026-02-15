@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ApplicationsTable = () => {
+const TablePagination = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const ApplicationsTable = () => {
   )
 }
 
-export default ApplicationsTable
+export default TablePagination
