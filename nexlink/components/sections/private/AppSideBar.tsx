@@ -9,7 +9,6 @@ import {
   SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -42,8 +41,8 @@ const items = [
     icon: Home,
   },
   {
-    title: "Apply",
-    url: "/create",
+    title: "Applications",
+    url: "/applications",
     icon: Briefcase,
   },
   {
@@ -70,8 +69,8 @@ export function HeaderAvatar() {
         <div className="flex items-center gap-4">
           <Skeleton className="h-8 w-8 rounded-full" />
           <div className="space-y-2">
-            <Skeleton className="h-4 w-[150px]" />
-            <Skeleton className="h-4 w-[100px]" />
+            <Skeleton className="h-4 w-37.5" />
+            <Skeleton className="h-4 w-25" />
           </div>
         </div>
       </SidebarMenuItem>
@@ -126,9 +125,6 @@ export function AppSidebar() {
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="text-primary">
-            Application
-          </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
