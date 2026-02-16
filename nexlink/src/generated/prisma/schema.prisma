@@ -34,8 +34,6 @@ model User {
   updatedAt    DateTime      @updatedAt
   applications Application[]
 
-  applications Application[]
-
   @@map("users")
 }
 

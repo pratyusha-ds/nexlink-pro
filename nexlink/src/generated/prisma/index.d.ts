@@ -2163,7 +2163,6 @@ export namespace Prisma {
     logoUrl: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    userId: string | null
   }
 
   export type ApplicationMaxAggregateOutputType = {
@@ -2184,7 +2183,6 @@ export namespace Prisma {
     logoUrl: string | null
     createdAt: Date | null
     updatedAt: Date | null
-    userId: string | null
   }
 
   export type ApplicationCountAggregateOutputType = {
@@ -2205,7 +2203,6 @@ export namespace Prisma {
     logoUrl: number
     createdAt: number
     updatedAt: number
-    userId: number
     _all: number
   }
 
@@ -2236,7 +2233,6 @@ export namespace Prisma {
     logoUrl?: true
     createdAt?: true
     updatedAt?: true
-    userId?: true
   }
 
   export type ApplicationMaxAggregateInputType = {
@@ -2257,7 +2253,6 @@ export namespace Prisma {
     logoUrl?: true
     createdAt?: true
     updatedAt?: true
-    userId?: true
   }
 
   export type ApplicationCountAggregateInputType = {
@@ -2278,7 +2273,6 @@ export namespace Prisma {
     logoUrl?: true
     createdAt?: true
     updatedAt?: true
-    userId?: true
     _all?: true
   }
 
@@ -2386,7 +2380,6 @@ export namespace Prisma {
     logoUrl: string | null
     createdAt: Date
     updatedAt: Date
-    userId: string
     _count: ApplicationCountAggregateOutputType | null
     _avg: ApplicationAvgAggregateOutputType | null
     _sum: ApplicationSumAggregateOutputType | null
@@ -2489,7 +2482,6 @@ export namespace Prisma {
     logoUrl?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    userId?: boolean
   }
 
   export type ApplicationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "companyName" | "jobTitle" | "status" | "website" | "jobUrl" | "description" | "email" | "location" | "type" | "notes" | "interviewDnT" | "salary" | "logoUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["application"]>
@@ -2526,7 +2518,6 @@ export namespace Prisma {
       logoUrl: string | null
       createdAt: Date
       updatedAt: Date
-      userId: string
     }, ExtArgs["result"]["application"]>
     composites: {}
   }
@@ -2968,7 +2959,6 @@ export namespace Prisma {
     readonly logoUrl: FieldRef<"Application", 'String'>
     readonly createdAt: FieldRef<"Application", 'DateTime'>
     readonly updatedAt: FieldRef<"Application", 'DateTime'>
-    readonly userId: FieldRef<"Application", 'String'>
   }
     
 
@@ -3428,8 +3418,7 @@ export namespace Prisma {
     salary: 'salary',
     logoUrl: 'logoUrl',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
-    userId: 'userId'
+    updatedAt: 'updatedAt'
   };
 
   export type ApplicationScalarFieldEnum = (typeof ApplicationScalarFieldEnum)[keyof typeof ApplicationScalarFieldEnum]
@@ -3708,7 +3697,6 @@ export namespace Prisma {
     logoUrl?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    userId?: SortOrder
     _count?: ApplicationCountOrderByAggregateInput
     _avg?: ApplicationAvgOrderByAggregateInput
     _max?: ApplicationMaxOrderByAggregateInput
@@ -3737,7 +3725,6 @@ export namespace Prisma {
     logoUrl?: StringNullableWithAggregatesFilter<"Application"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Application"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Application"> | Date | string
-    userId?: StringWithAggregatesFilter<"Application"> | string
   }
 
   export type UserCreateInput = {
@@ -3858,7 +3845,6 @@ export namespace Prisma {
     logoUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    userId: string
   }
 
   export type ApplicationUpdateInput = {
@@ -3898,7 +3884,6 @@ export namespace Prisma {
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
   }
 
   export type ApplicationCreateManyInput = {
@@ -3919,7 +3904,6 @@ export namespace Prisma {
     logoUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    userId: string
   }
 
   export type ApplicationUpdateManyMutationInput = {
@@ -3958,7 +3942,6 @@ export namespace Prisma {
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -4159,7 +4142,6 @@ export namespace Prisma {
     logoUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    userId?: SortOrder
   }
 
   export type ApplicationAvgOrderByAggregateInput = {
@@ -4184,7 +4166,6 @@ export namespace Prisma {
     logoUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    userId?: SortOrder
   }
 
   export type ApplicationMinOrderByAggregateInput = {
@@ -4205,7 +4186,6 @@ export namespace Prisma {
     logoUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    userId?: SortOrder
   }
 
   export type ApplicationSumOrderByAggregateInput = {
