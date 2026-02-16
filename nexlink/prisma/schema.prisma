@@ -33,9 +33,6 @@ model User {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   applications Application[]
-
-  applications Application[]
-
   @@map("users")
 }
 

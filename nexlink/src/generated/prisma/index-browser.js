@@ -148,8 +148,7 @@ exports.Prisma.ApplicationScalarFieldEnum = {
   salary: 'salary',
   logoUrl: 'logoUrl',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  userId: 'userId'
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SortOrder = {
