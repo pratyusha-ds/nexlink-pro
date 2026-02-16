@@ -1,7 +1,6 @@
 "use client";
 
 import { Pie, PieChart, Cell } from "recharts";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
@@ -34,35 +33,30 @@ export function StatusPie({ data }: { data: any[] }) {
   });
 
   return (
-    <Card className="flex flex-col border-none shadow-none bg-transparent">
-      <CardHeader className="items-center pb-0">
-        <CardTitle className="text-lg">Application Status</CardTitle>
-      </CardHeader>
-      <CardContent className="flex-1 pb-0">
-        <ChartContainer
-          config={chartConfig}
-          className="mx-auto aspect-square max-h-75"
-        >
-          <PieChart>
-            <ChartTooltip content={<ChartTooltipContent hideLabel />} />
-            <Pie
-              data={formattedData}
-              dataKey="total"
-              nameKey="status"
-              innerRadius={40}
-              strokeWidth={5}
-            >
-              {formattedData.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={entry.fill} />
-              ))}
-            </Pie>
-            <ChartLegend
-              content={<ChartLegendContent nameKey="status" />}
-              className="-translate-y-2 flex-wrap"
-            />
-          </PieChart>
-        </ChartContainer>
-      </CardContent>
-    </Card>
+    <div className="flex flex-col">
+      <ChartContainer
+        config={chartConfig}
+        className="mx-auto aspect-square max-h-60 w-full"
+      >
+        <PieChart>
+          <ChartTooltip content={<ChartTooltipContent hideLabel />} />
+          <Pie
+            data={formattedData}
+            dataKey="total"
+            nameKey="status"
+            innerRadius={35}
+            strokeWidth={4}
+          >
+            {formattedData.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={entry.fill} />
+            ))}
+          </Pie>
+          <ChartLegend
+            content={<ChartLegendContent nameKey="status" />}
+            className="flex-wrap justify-center gap-3 mt-2"
+          />
+        </PieChart>
+      </ChartContainer>
+    </div>
   );
 }

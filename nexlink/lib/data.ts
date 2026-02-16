@@ -1,4 +1,5 @@
 // NOTE: we can add the user id on the params of each call to remove the calling of getCurrentUserId on each get db call.
+"use server";
 
 import { currentUser } from "@clerk/nextjs/server";
 import { db } from "./prisma";
@@ -23,6 +24,25 @@ export async function getRecentApplications() {
     where: { userId },
     take: 5,
     orderBy: { createdAt: "desc" },
+  });
+}
+
+export async function getApplications() {
+  const userId = await getCurrentUserId();
+  if (!userId) return [];
+
+  return await db.application.findMany({
+    where: { userId },
+    select: {
+      id: true,
+      jobTitle: true,
+      companyName: true,
+      status: true,
+      type: true,
+      notes: true,
+      interviewDnT: true,
+    },
+    orderBy: { id: "asc" },
   });
 }
 
