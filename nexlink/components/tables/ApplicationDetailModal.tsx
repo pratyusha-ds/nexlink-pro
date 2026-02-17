@@ -47,29 +47,6 @@ interface ApplicationDetailModalProps {
   onStatusChange?: (id: number, status: string) => void;
 }
 
-const statusConfig: Record<string, { label: string; className: string }> = {
-  PENDING: {
-    label: "Pending",
-    className: "bg-yellow-500 hover:bg-yellow-600 text-white",
-  },
-  APPLIED: {
-    label: "Applied",
-    className: "bg-[#16db65] hover:bg-[#14c259] text-white",
-  },
-  BEING_PROCESSED: {
-    label: "Being Processed",
-    className: "bg-orange-500 hover:bg-orange-600 text-white",
-  },
-  WAITING_FOR_INTERVIEW: {
-    label: "Waiting for Interview",
-    className: "bg-purple-500 hover:bg-purple-600 text-white",
-  },
-  REJECTED: {
-    label: "Rejected",
-    className: "bg-red-500 hover:bg-red-600 text-white",
-  },
-};
-
 const typeLabels: Record<string, string> = {
   REGULAR: "Regular",
   INTERNSHIP: "Internship",

@@ -31,26 +31,7 @@ import EmptyTable from "./EmptyTable";
 import { TableFilters, FilterOption } from "./TableFilters";
 import NoSearchResult from "./NoSearchResult";
 import { DeleteConfirmDialog } from "./DeleteConfirmDialog";
-import { ApplicationDetailModal } from "./ApplicationDetailModal";
 import { FiTrash2 } from "react-icons/fi";
-
-interface ApplicationDetailData {
-  id: number;
-  jobTitle: string;
-  companyName: string;
-  status: string;
-  type: string;
-  mode: string;
-  notes: string | null;
-  interviewDnT: Date | null;
-  website?: string | null;
-  jobUrl?: string | null;
-  description?: string | null;
-  email?: string | null;
-  location?: string | null;
-  salary?: string | null;
-  logoUrl?: string | null;
-}
 
 declare module "@tanstack/react-table" {
   interface ColumnMeta<TData, TValue> {
@@ -73,7 +54,6 @@ interface DataTableProps<TData, TValue> {
   filters?: FilterOption[];
   onDelete?: (rows: TData[]) => void;
   onView?: (row: TData) => void;
-  onEdit?: (id: number) => void;
   onStatusChange?: (id: number, status: string) => void;
 }
 
@@ -85,7 +65,6 @@ export function DataTable<TData, TValue>({
   filters,
   onDelete,
   onView,
-  onEdit,
   onStatusChange,
 }: DataTableProps<TData, TValue>) {
   const router = useRouter();
@@ -95,7 +74,9 @@ export function DataTable<TData, TValue>({
   const [searchValue, setSearchValue] = useState("");
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
-  const [selectedApplication, setSelectedApplication] = useState<TData | null>(null);
+  const [selectedApplication, setSelectedApplication] = useState<TData | null>(
+    null,
+  );
 
   const table = useReactTable({
     data,
@@ -313,7 +294,10 @@ export function DataTable<TData, TValue>({
                   className="h-16 border-y border-gray-200 cursor-pointer hover:bg-muted/50"
                   onClick={() => handleRowClick(row.original)}
                 >
-                  <TableCell className="w-12" onClick={(e) => e.stopPropagation()}>
+                  <TableCell
+                    className="w-12"
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     <Checkbox
                       checked={row.getIsSelected()}
                       onCheckedChange={(value) => row.toggleSelected(!!value)}

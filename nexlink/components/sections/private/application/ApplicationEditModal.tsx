@@ -138,7 +138,6 @@ export function ApplicationEditModal({
         location: formData.location || undefined,
         notes: formData.notes || undefined,
       });
-      onOpenChange(false);
       onSuccess?.();
     } catch (error) {
       console.error("Failed to update application:", error);

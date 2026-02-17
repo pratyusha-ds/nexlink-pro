@@ -1,5 +1,6 @@
 "use client";
 
+import { use, useEffect, useState } from "react";
 import UserPage from "@/components/page/UserPage";
 import {
   Application,
@@ -16,8 +17,12 @@ import {
   deleteApplications,
   updateApplicationStatus,
 } from "@/lib/data";
-import { useEffect, useState } from "react";
-import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
+
+interface SearchParams {
+  id?: string;
+  edit?: string;
+}
 
 const statusOptions: FilterOption[] = [
   {
@@ -56,22 +61,37 @@ const modeOptions: FilterOption[] = [
   },
 ];
 
-const ApplicationsPage = () => {
+function ApplicationsContent({
+  searchParams,
+}: {
+  searchParams: Promise<SearchParams>;
+}) {
+  const resolved = use(searchParams);
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const [applications, setApplications] = useState<Application[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedApp, setSelectedApp] = useState<Application | null>(null);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [deleteId, setDeleteId] = useState<number | null>(null);
+  const [redirectToId, setRedirectToId] = useState<string | null>(null);
 
-  const selectedId = searchParams.get("id");
-  const isEditMode = searchParams.get("edit") === "true";
+  const selectedId = resolved?.id;
+  const isEditMode = resolved?.edit === "true";
 
   const handleView = async (row: Application) => {
     router.push(`${pathname}?id=${row.id}`);
   };
+
+  const handleEditModalClose = () => {
+    if (redirectToId) {
+      router.push(`${pathname}?id=${redirectToId}`);
+      setRedirectToId(null);
+    } else {
+      router.push(pathname);
+    }
+  };
+
   useEffect(() => {
     getApplications().then((data) => {
       setApplications(data);
@@ -122,7 +142,7 @@ const ApplicationsPage = () => {
         onOpenChange={() => router.push(pathname)}
         application={selectedApp}
         onEdit={async (id) => {
-          router.push(`${pathname}?=id=${id}&edit=true`);
+          router.push(`${pathname}?id=${id}&edit=true`);
         }}
         onDelete={(id) => {
           setDeleteId(id);
@@ -154,15 +174,28 @@ const ApplicationsPage = () => {
 
       <ApplicationEditModal
         open={isEditMode}
-        onOpenChange={() => router.push(pathname)}
+        onOpenChange={handleEditModalClose}
         application={selectedApp}
         onSuccess={async () => {
           const data = await getApplications();
           setApplications(data);
+
+          if (selectedId) {
+            const updated = await getApplicationById(Number(selectedId));
+            setSelectedApp(updated as Application);
+            setRedirectToId(selectedId);
+            router.push(`${pathname}?id=${selectedId}`);
+          }
         }}
       />
     </UserPage>
   );
-};
+}
 
-export default ApplicationsPage;
+export default function ApplicationsPage({
+  searchParams,
+}: {
+  searchParams: Promise<SearchParams>;
+}) {
+  return <ApplicationsContent searchParams={searchParams} />;
+}
