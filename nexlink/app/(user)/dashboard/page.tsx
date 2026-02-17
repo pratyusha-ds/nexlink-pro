@@ -1,6 +1,6 @@
-import { StatusPie } from "@/components/dashboard/status-pie-chart";
-import { WorkTypeBar } from "@/components/dashboard/work-type-chart";
-import { StatsCards } from "@/components/dashboard/stats-cards";
+import { StatusPie } from "@/components/sections/private/dashboard/status-pie-chart";
+import { WorkTypeBar } from "@/components/sections/private/dashboard/work-type-chart";
+import { StatsCards } from "@/components/sections/private/dashboard/stats-cards";
 import {
   getRecentApplications,
   getStatusStats,
@@ -93,8 +93,9 @@ export default async function DashboardPage() {
                     className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors"
                   >
                     <div
-                      className={`h-2 w-2 rounded-full shrink-0 ${statusColorMap[app.status] || "bg-gray-400"
-                        }`}
+                      className={`h-2 w-2 rounded-full shrink-0 ${
+                        statusColorMap[app.status] || "bg-gray-400"
+                      }`}
                     />
                     <div className="flex items-center gap-2 min-w-0 flex-1">
                       <Building2 className="h-4 w-4 text-gray-400 shrink-0" />
