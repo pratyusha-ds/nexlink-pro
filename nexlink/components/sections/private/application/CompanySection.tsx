@@ -13,6 +13,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+} from "@/components/ui/select";
 
 export default function CompanySection({
   form,
@@ -43,7 +50,7 @@ export default function CompanySection({
   }, [companyName, form]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div className="space-y-4">
         <h3 className="text-lg font-semibold">Company Information</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -178,6 +185,28 @@ export default function CompanySection({
               </FormItem>
             )}
           />
+
+          <FormField
+            control={form.control}
+            name="type"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Work Type</FormLabel>
+                <Select onValueChange={field.onChange} value={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select type" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="REGULAR">Regular</SelectItem>
+                    <SelectItem value="INTERNSHIP">Internship</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -188,7 +217,7 @@ export default function CompanySection({
               <FormItem>
                 <FormLabel>Description</FormLabel>
                 <FormControl>
-                  <Textarea rows={4} {...field} />
+                  <Textarea {...field} className="resize-none h-30" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -202,7 +231,11 @@ export default function CompanySection({
               <FormItem>
                 <FormLabel>Notes</FormLabel>
                 <FormControl>
-                  <Textarea rows={4} {...field} value={field.value ?? ""} />
+                  <Textarea
+                    {...field}
+                    value={field.value ?? ""}
+                    className="resize-none h-30"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

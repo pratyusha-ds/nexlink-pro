@@ -41,7 +41,9 @@ export default function StatusSection({
                 <SelectContent>
                   <SelectItem value="PENDING">Pending</SelectItem>
                   <SelectItem value="APPLIED">Applied</SelectItem>
-                  <SelectItem value="BEING_PROCESSED">Being Processed</SelectItem>
+                  <SelectItem value="BEING_PROCESSED">
+                    Being Processed
+                  </SelectItem>
                   <SelectItem value="WAITING_FOR_INTERVIEW">
                     Waiting for Interview
                   </SelectItem>
@@ -55,14 +57,14 @@ export default function StatusSection({
 
         <FormField
           control={form.control}
-          name="type"
+          name="mode"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Work Type</FormLabel>
+              <FormLabel>Work Mode</FormLabel>
               <Select onValueChange={field.onChange} value={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select type" />
+                    <SelectValue placeholder="Select mode" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>

@@ -10,8 +10,10 @@ import {
   getSortedRowModel,
   ColumnFiltersState,
   getFilteredRowModel,
+  RowSelectionState,
 } from "@tanstack/react-table";
 
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Table,
   TableBody,
@@ -22,16 +24,42 @@ import {
 } from "@/components/ui/table";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { FolderOpen } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import EmptyTable from "./EmptyTable";
+import { TableFilters, FilterOption } from "./TableFilters";
+import NoSearchResult from "./NoSearchResult";
+import { DeleteConfirmDialog } from "./DeleteConfirmDialog";
+import { ApplicationDetailModal } from "./ApplicationDetailModal";
+import { FiTrash2 } from "react-icons/fi";
 
-// Add this type definition
+interface ApplicationDetailData {
+  id: number;
+  jobTitle: string;
+  companyName: string;
+  status: string;
+  type: string;
+  mode: string;
+  notes: string | null;
+  interviewDnT: Date | null;
+  website?: string | null;
+  jobUrl?: string | null;
+  description?: string | null;
+  email?: string | null;
+  location?: string | null;
+  salary?: string | null;
+  logoUrl?: string | null;
+}
+
 declare module "@tanstack/react-table" {
   interface ColumnMeta<TData, TValue> {
+    filterKey?: string;
     className?: string;
+  }
+
+  interface TableMeta<TData> {
+    onStatusChange?: (id: number, status: string) => void;
   }
 }
 
@@ -39,16 +67,35 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   isLoading?: boolean;
+  searchKey?: string;
+  searchKeys?: string[];
+  searchPlaceholder?: string;
+  filters?: FilterOption[];
+  onDelete?: (rows: TData[]) => void;
+  onView?: (row: TData) => void;
+  onEdit?: (id: number) => void;
+  onStatusChange?: (id: number, status: string) => void;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
   isLoading = false,
+  searchPlaceholder = "Search...",
+  filters,
+  onDelete,
+  onView,
+  onEdit,
+  onStatusChange,
 }: DataTableProps<TData, TValue>) {
   const router = useRouter();
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [globalFilter, setGlobalFilter] = useState("");
+  const [searchValue, setSearchValue] = useState("");
+  const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [selectedApplication, setSelectedApplication] = useState<TData | null>(null);
 
   const table = useReactTable({
     data,
@@ -59,56 +106,168 @@ export function DataTable<TData, TValue>({
     getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
+    onGlobalFilterChange: setGlobalFilter,
+    onRowSelectionChange: setRowSelection,
+    globalFilterFn: "includesString",
     state: {
       sorting,
       columnFilters,
+      globalFilter,
+      rowSelection,
+    },
+    meta: {
+      onStatusChange,
     },
   });
 
+  const selectedRows = Object.keys(rowSelection);
+  const isSelectionMode = selectedRows.length > 0;
+
+  const isEmpty = table.getRowModel().rows?.length === 0;
+  const hasActiveFilters = !!globalFilter || columnFilters.length > 0;
+  const showNoResult = hasActiveFilters && isEmpty && !isLoading;
+
+  const showFilters = !isEmpty || hasActiveFilters;
+
+  const handleSearchChange = (value: string) => {
+    setSearchValue(value);
+    const trimmedValue = value.trim();
+    setGlobalFilter(trimmedValue);
+  };
+
+  const handleFilterChange = (columnKey: string, value: string) => {
+    if (value === "all") {
+      table.getColumn(columnKey)?.setFilterValue(undefined);
+    } else {
+      table.getColumn(columnKey)?.setFilterValue(value);
+    }
+  };
+
+  const handleClearFilters = () => {
+    setSearchValue("");
+    setGlobalFilter("");
+    setColumnFilters([]);
+    columns.forEach((col) => {
+      const filterKey = col.meta?.filterKey;
+      if (filterKey) {
+        table.getColumn(filterKey)?.setFilterValue(undefined);
+      }
+    });
+  };
+
+  const handleClearSelection = () => {
+    setRowSelection({});
+  };
+
+  const handleDeleteClick = () => {
+    setShowDeleteDialog(true);
+  };
+
+  const handleDeleteConfirm = () => {
+    const selectedData = table
+      .getSelectedRowModel()
+      .rows.map((row) => row.original);
+    onDelete?.(selectedData);
+    setRowSelection({});
+  };
+
+  const handleRowClick = (rowData: TData) => {
+    if (onView) {
+      setSelectedApplication(rowData);
+      onView(rowData);
+    }
+  };
+
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <Input
-          placeholder="Search application"
-          value={
-            (table.getColumn("companyName")?.getFilterValue() as string) ?? ""
-          }
-          onChange={(event) =>
-            table.getColumn("companyName")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm shadow-none focus-visible:ring-0"
-        />
+      <div className="flex items-center justify-between h-12">
+        {isSelectionMode ? (
+          <div className="flex items-center gap-2 w-full justify-between">
+            <span className="text-sm text-muted-foreground">
+              {selectedRows.length} selected
+            </span>
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleClearSelection}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="destructive"
+                size="sm"
+                onClick={handleDeleteClick}
+              >
+                <FiTrash2 className="h-4 w-4 mr-2" />
+                Delete
+              </Button>
+            </div>
+          </div>
+        ) : showFilters ? (
+          <TableFilters
+            searchPlaceholder={searchPlaceholder}
+            searchValue={searchValue}
+            onSearchChange={handleSearchChange}
+            filters={
+              filters?.map((f) => ({
+                columnKey: f.value,
+                placeholder: f.label,
+                options: f.options || [],
+                value:
+                  (table.getColumn(f.value)?.getFilterValue() as string) ||
+                  "all",
+                onChange: (value) => handleFilterChange(f.value, value),
+              })) || undefined
+            }
+            hasActiveFilters={hasActiveFilters}
+            onClearFilters={handleClearFilters}
+          />
+        ) : null}
 
-        <Button onClick={() => router.push("/applications/create")}>
-          Create
-        </Button>
+        {!isSelectionMode && (
+          <Button
+            onClick={() => router.push("/applications/create")}
+            className="ml-auto"
+          >
+            Create
+          </Button>
+        )}
       </div>
 
       <div className="rounded-md border-gray-200 border bg-white">
         {isLoading ? (
           <Table>
             <TableHeader>
-              <TableRow className="border-b border-gray-200 hover:bg-transparent">
+              <TableRow className="border-none hover:bg-transparent">
+                <TableHead className="w-12">
+                  <Skeleton className="h-5 w-5" />
+                </TableHead>
                 {columns.map((_, i) => (
                   <TableHead key={i} className={columns[i]?.meta?.className}>
-                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-5 w-32 mr-auto" />
                   </TableHead>
                 ))}
               </TableRow>
             </TableHeader>
             <TableBody>
               {Array.from({ length: 10 }).map((_, i) => (
-                <TableRow key={i} className="h-16 border-y border-gray-200">
+                <TableRow key={i} className="h-16 border-none">
+                  <TableCell className="w-12">
+                    <Skeleton className="h-5 w-5" />
+                  </TableCell>
                   {columns.map((_, j) => (
                     <TableCell key={j} className={columns[j]?.meta?.className}>
-                      <Skeleton className="h-4 w-full" />
+                      <Skeleton className="h-5 w-32 mr-auto" />
                     </TableCell>
                   ))}
                 </TableRow>
               ))}
             </TableBody>
           </Table>
-        ) : table.getRowModel().rows?.length ? (
+        ) : showNoResult ? (
+          <NoSearchResult />
+        ) : !isEmpty ? (
           <Table>
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
@@ -116,6 +275,18 @@ export function DataTable<TData, TValue>({
                   key={headerGroup.id}
                   className="border-b border-gray-200 hover:bg-transparent"
                 >
+                  <TableHead className="w-12">
+                    <Checkbox
+                      checked={
+                        table.getIsAllPageRowsSelected() ||
+                        (table.getIsSomePageRowsSelected() && "indeterminate")
+                      }
+                      onCheckedChange={(value) =>
+                        table.toggleAllPageRowsSelected(!!value)
+                      }
+                      aria-label="Select all"
+                    />
+                  </TableHead>
                   {headerGroup.headers.map((header) => {
                     return (
                       <TableHead
@@ -139,12 +310,25 @@ export function DataTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  className="h-16 border-y border-gray-200"
+                  className="h-16 border-y border-gray-200 cursor-pointer hover:bg-muted/50"
+                  onClick={() => handleRowClick(row.original)}
                 >
+                  <TableCell className="w-12" onClick={(e) => e.stopPropagation()}>
+                    <Checkbox
+                      checked={row.getIsSelected()}
+                      onCheckedChange={(value) => row.toggleSelected(!!value)}
+                      aria-label="Select row"
+                    />
+                  </TableCell>
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
                       key={cell.id}
                       className={cell.column.columnDef.meta?.className}
+                      onClick={(e) => {
+                        if (cell.column.id === "status") {
+                          e.stopPropagation();
+                        }
+                      }}
                     >
                       {flexRender(
                         cell.column.columnDef.cell,
@@ -161,6 +345,7 @@ export function DataTable<TData, TValue>({
                   key={`empty-${index}`}
                   className="h-16 border-y border-gray-200 hover:bg-transparent"
                 >
+                  <TableCell className="w-12"></TableCell>
                   {columns.map((_, colIndex) => (
                     <TableCell
                       key={colIndex}
@@ -174,42 +359,41 @@ export function DataTable<TData, TValue>({
             </TableBody>
           </Table>
         ) : (
-          // empty state
-          <div className="flex flex-col items-center justify-center py-8 px-4 text-center h-160">
-            <div className="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center mb-3">
-              <FolderOpen className="h-5 w-5 text-gray-400" />
-            </div>
-            <h3 className="text-sm font-semibold text-gray-900 mb-1">
-              No applications found
-            </h3>
-            <p className="text-xs text-gray-500 max-w-xs">
-              Get started by creating a new application
-            </p>
-          </div>
+          <EmptyTable />
         )}
       </div>
 
       {/* Pagination */}
-      {!isLoading && table.getRowModel().rows?.length && (
-        <div className="flex items-center justify-end space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Next
-          </Button>
-        </div>
-      )}
+      {!isLoading &&
+        !isEmpty &&
+        !showNoResult &&
+        table.getRowModel().rows?.length > 10 && (
+          <div className="flex items-center justify-end space-x-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+            >
+              Previous
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
+            >
+              Next
+            </Button>
+          </div>
+        )}
+
+      <DeleteConfirmDialog
+        open={showDeleteDialog}
+        onOpenChange={setShowDeleteDialog}
+        onConfirm={handleDeleteConfirm}
+        count={selectedRows.length}
+      />
     </div>
   );
 }

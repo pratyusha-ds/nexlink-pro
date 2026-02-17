@@ -8,12 +8,15 @@ const ApplicationStatus = z.enum([
   "REJECTED",
 ]);
 
-const ApplicationType = z.enum(["REMOTE", "ON_SITE", "HYBRID"]);
+const ApplicationType = z.enum(["REGULAR", "INTERNSHIP"]);
+
+const WorkMode = z.enum(["ON_SITE", "REMOTE", "HYBRID"]);
 
 export const applicationSchema = z.object({
   companyName: z.string().min(1, "Company name is required"),
   jobTitle: z.string().min(2, "Job title must be at least 2 characters"),
   status: ApplicationStatus,
+  mode: WorkMode,
   type: ApplicationType,
   website: z.url("Invalid URL").or(z.literal("")).nullable(),
   jobUrl: z.url("Invalid job link").or(z.literal("")).nullable(),
