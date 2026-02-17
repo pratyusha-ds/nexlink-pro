@@ -47,29 +47,6 @@ interface ApplicationDetailModalProps {
   onStatusChange?: (id: number, status: string) => void;
 }
 
-const statusConfig: Record<string, { label: string; className: string }> = {
-  PENDING: {
-    label: "Pending",
-    className: "bg-yellow-500 hover:bg-yellow-600 text-white",
-  },
-  APPLIED: {
-    label: "Applied",
-    className: "bg-[#16db65] hover:bg-[#14c259] text-white",
-  },
-  BEING_PROCESSED: {
-    label: "Being Processed",
-    className: "bg-orange-500 hover:bg-orange-600 text-white",
-  },
-  WAITING_FOR_INTERVIEW: {
-    label: "Waiting for Interview",
-    className: "bg-purple-500 hover:bg-purple-600 text-white",
-  },
-  REJECTED: {
-    label: "Rejected",
-    className: "bg-red-500 hover:bg-red-600 text-white",
-  },
-};
-
 const typeLabels: Record<string, string> = {
   REGULAR: "Regular",
   INTERNSHIP: "Internship",
@@ -93,7 +70,10 @@ export function ApplicationDetailModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-125 max-h-[85vh] overflow-hidden flex flex-col p-0 gap-0 border-gray-200 shadow-none drop-shadow-none">
+      <DialogContent
+        className="sm:max-w-125 md:max-w-200 w-full max-h-[85vh] overflow-hidden flex flex-col p-0 gap-0 border-gray-200 shadow-none drop-shadow-none"
+        showCloseButton={false}
+      >
         <DialogHeader className="p-6 pb-4">
           <div className="flex items-start gap-4">
             {application.logoUrl ? (
@@ -120,7 +100,9 @@ export function ApplicationDetailModal({
                 {onStatusChange ? (
                   <StatusDropdown
                     status={application.status}
-                    onStatusChange={(status) => onStatusChange(application.id, status)}
+                    onStatusChange={(status) =>
+                      onStatusChange(application.id, status)
+                    }
                   />
                 ) : (
                   <StatusBadge status={application.status} />

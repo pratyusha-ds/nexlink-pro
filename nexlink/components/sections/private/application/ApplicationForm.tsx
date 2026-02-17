@@ -13,19 +13,27 @@ import {
   type ApplicationFormValues,
 } from "@/lib/validations/application";
 
-import { createApplication } from "@/lib/actions/application";
+import { createApplication, updateApplication } from "@/lib/actions/application";
 
 import CompanySection from "./CompanySection";
 import StatusSection from "./StatusSection";
 
-export default function ApplicationForm() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
+interface ApplicationFormProps {
+  defaultValues?: Partial<ApplicationFormValues>;
+  id?: number;
+}
 
+export default function ApplicationForm({ defaultValues, id }: ApplicationFormProps) {
+  const router = useRouter();
+
+  const isEditMode = !!id;
+  
+  const searchParams = useSearchParams();
   const company = searchParams.get("company") || "";
   const title = searchParams.get("title") || "";
   const location = searchParams.get("location") || "";
   const jobUrl = searchParams.get("url") || "";
+
 
   const form = useForm<ApplicationFormValues>({
     resolver: zodResolver(applicationSchema),
@@ -38,6 +46,7 @@ export default function ApplicationForm() {
       status: "PENDING",
       type: "REGULAR",
       mode: "REMOTE",
+      ...defaultValues,
     },
   });
 
@@ -52,10 +61,15 @@ export default function ApplicationForm() {
 
   async function onSubmit(values: ApplicationFormValues) {
     try {
-      await createApplication(values);
-      router.push("/applications");
+      if (isEditMode && id) {
+        await updateApplication(id, values);
+        router.refresh();
+      } else {
+        await createApplication(values);
+        router.push("/applications");
+      }
     } catch (error) {
-      console.error("Failed to create application:", error);
+      console.error(isEditMode ? "Failed to update application:" : "Failed to create application:", error);
     }
   }
 
@@ -76,7 +90,7 @@ export default function ApplicationForm() {
                 Cancel
               </Button>
               <Button type="submit" className="bg-green-700 hover:bg-green-800">
-                Save Application
+                {isEditMode ? "Update Application" : "Save Application"}
               </Button>
             </div>
           </form>
