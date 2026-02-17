@@ -18,6 +18,12 @@ enum ApplicationStatus {
 
 // Enum for type
 enum ApplicationType {
+  REGULAR 
+  INTERNSHIP 
+}
+
+// Enum for mode 
+enum WorkMode {
   REMOTE
   ON_SITE
   HYBRID
@@ -42,6 +48,7 @@ model Application {
   companyName   String
   jobTitle      String
   status        ApplicationStatus
+  mode          WorkMode 
   website       String?
   jobUrl        String?
   description   String

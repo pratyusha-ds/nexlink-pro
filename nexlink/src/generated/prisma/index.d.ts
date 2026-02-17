@@ -40,12 +40,20 @@ export type ApplicationStatus = (typeof ApplicationStatus)[keyof typeof Applicat
 
 
 export const ApplicationType: {
+  REGULAR: 'REGULAR',
+  INTERNSHIP: 'INTERNSHIP'
+};
+
+export type ApplicationType = (typeof ApplicationType)[keyof typeof ApplicationType]
+
+
+export const WorkMode: {
   REMOTE: 'REMOTE',
   ON_SITE: 'ON_SITE',
   HYBRID: 'HYBRID'
 };
 
-export type ApplicationType = (typeof ApplicationType)[keyof typeof ApplicationType]
+export type WorkMode = (typeof WorkMode)[keyof typeof WorkMode]
 
 }
 
@@ -56,6 +64,10 @@ export const ApplicationStatus: typeof $Enums.ApplicationStatus
 export type ApplicationType = $Enums.ApplicationType
 
 export const ApplicationType: typeof $Enums.ApplicationType
+
+export type WorkMode = $Enums.WorkMode
+
+export const WorkMode: typeof $Enums.WorkMode
 
 /**
  * ##  Prisma Client ʲˢ
@@ -2151,6 +2163,7 @@ export namespace Prisma {
     companyName: string | null
     jobTitle: string | null
     status: $Enums.ApplicationStatus | null
+    mode: $Enums.WorkMode | null
     website: string | null
     jobUrl: string | null
     description: string | null
@@ -2171,6 +2184,7 @@ export namespace Prisma {
     companyName: string | null
     jobTitle: string | null
     status: $Enums.ApplicationStatus | null
+    mode: $Enums.WorkMode | null
     website: string | null
     jobUrl: string | null
     description: string | null
@@ -2191,6 +2205,7 @@ export namespace Prisma {
     companyName: number
     jobTitle: number
     status: number
+    mode: number
     website: number
     jobUrl: number
     description: number
@@ -2221,6 +2236,7 @@ export namespace Prisma {
     companyName?: true
     jobTitle?: true
     status?: true
+    mode?: true
     website?: true
     jobUrl?: true
     description?: true
@@ -2241,6 +2257,7 @@ export namespace Prisma {
     companyName?: true
     jobTitle?: true
     status?: true
+    mode?: true
     website?: true
     jobUrl?: true
     description?: true
@@ -2261,6 +2278,7 @@ export namespace Prisma {
     companyName?: true
     jobTitle?: true
     status?: true
+    mode?: true
     website?: true
     jobUrl?: true
     description?: true
@@ -2368,6 +2386,7 @@ export namespace Prisma {
     companyName: string
     jobTitle: string
     status: $Enums.ApplicationStatus
+    mode: $Enums.WorkMode
     website: string | null
     jobUrl: string | null
     description: string
@@ -2407,6 +2426,7 @@ export namespace Prisma {
     companyName?: boolean
     jobTitle?: boolean
     status?: boolean
+    mode?: boolean
     website?: boolean
     jobUrl?: boolean
     description?: boolean
@@ -2428,6 +2448,7 @@ export namespace Prisma {
     companyName?: boolean
     jobTitle?: boolean
     status?: boolean
+    mode?: boolean
     website?: boolean
     jobUrl?: boolean
     description?: boolean
@@ -2449,6 +2470,7 @@ export namespace Prisma {
     companyName?: boolean
     jobTitle?: boolean
     status?: boolean
+    mode?: boolean
     website?: boolean
     jobUrl?: boolean
     description?: boolean
@@ -2470,6 +2492,7 @@ export namespace Prisma {
     companyName?: boolean
     jobTitle?: boolean
     status?: boolean
+    mode?: boolean
     website?: boolean
     jobUrl?: boolean
     description?: boolean
@@ -2484,7 +2507,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type ApplicationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "companyName" | "jobTitle" | "status" | "website" | "jobUrl" | "description" | "email" | "location" | "type" | "notes" | "interviewDnT" | "salary" | "logoUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["application"]>
+  export type ApplicationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "companyName" | "jobTitle" | "status" | "mode" | "website" | "jobUrl" | "description" | "email" | "location" | "type" | "notes" | "interviewDnT" | "salary" | "logoUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["application"]>
   export type ApplicationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -2506,6 +2529,7 @@ export namespace Prisma {
       companyName: string
       jobTitle: string
       status: $Enums.ApplicationStatus
+      mode: $Enums.WorkMode
       website: string | null
       jobUrl: string | null
       description: string
@@ -2947,6 +2971,7 @@ export namespace Prisma {
     readonly companyName: FieldRef<"Application", 'String'>
     readonly jobTitle: FieldRef<"Application", 'String'>
     readonly status: FieldRef<"Application", 'ApplicationStatus'>
+    readonly mode: FieldRef<"Application", 'WorkMode'>
     readonly website: FieldRef<"Application", 'String'>
     readonly jobUrl: FieldRef<"Application", 'String'>
     readonly description: FieldRef<"Application", 'String'>
@@ -3407,6 +3432,7 @@ export namespace Prisma {
     companyName: 'companyName',
     jobTitle: 'jobTitle',
     status: 'status',
+    mode: 'mode',
     website: 'website',
     jobUrl: 'jobUrl',
     description: 'description',
@@ -3506,6 +3532,20 @@ export namespace Prisma {
    * Reference to a field of type 'ApplicationStatus[]'
    */
   export type ListEnumApplicationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ApplicationStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'WorkMode'
+   */
+  export type EnumWorkModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WorkMode'>
+    
+
+
+  /**
+   * Reference to a field of type 'WorkMode[]'
+   */
+  export type ListEnumWorkModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WorkMode[]'>
     
 
 
@@ -3619,6 +3659,7 @@ export namespace Prisma {
     companyName?: StringFilter<"Application"> | string
     jobTitle?: StringFilter<"Application"> | string
     status?: EnumApplicationStatusFilter<"Application"> | $Enums.ApplicationStatus
+    mode?: EnumWorkModeFilter<"Application"> | $Enums.WorkMode
     website?: StringNullableFilter<"Application"> | string | null
     jobUrl?: StringNullableFilter<"Application"> | string | null
     description?: StringFilter<"Application"> | string
@@ -3640,6 +3681,7 @@ export namespace Prisma {
     companyName?: SortOrder
     jobTitle?: SortOrder
     status?: SortOrder
+    mode?: SortOrder
     website?: SortOrderInput | SortOrder
     jobUrl?: SortOrderInput | SortOrder
     description?: SortOrder
@@ -3664,6 +3706,7 @@ export namespace Prisma {
     companyName?: StringFilter<"Application"> | string
     jobTitle?: StringFilter<"Application"> | string
     status?: EnumApplicationStatusFilter<"Application"> | $Enums.ApplicationStatus
+    mode?: EnumWorkModeFilter<"Application"> | $Enums.WorkMode
     website?: StringNullableFilter<"Application"> | string | null
     jobUrl?: StringNullableFilter<"Application"> | string | null
     description?: StringFilter<"Application"> | string
@@ -3685,6 +3728,7 @@ export namespace Prisma {
     companyName?: SortOrder
     jobTitle?: SortOrder
     status?: SortOrder
+    mode?: SortOrder
     website?: SortOrderInput | SortOrder
     jobUrl?: SortOrderInput | SortOrder
     description?: SortOrder
@@ -3713,6 +3757,7 @@ export namespace Prisma {
     companyName?: StringWithAggregatesFilter<"Application"> | string
     jobTitle?: StringWithAggregatesFilter<"Application"> | string
     status?: EnumApplicationStatusWithAggregatesFilter<"Application"> | $Enums.ApplicationStatus
+    mode?: EnumWorkModeWithAggregatesFilter<"Application"> | $Enums.WorkMode
     website?: StringNullableWithAggregatesFilter<"Application"> | string | null
     jobUrl?: StringNullableWithAggregatesFilter<"Application"> | string | null
     description?: StringWithAggregatesFilter<"Application"> | string
@@ -3812,6 +3857,7 @@ export namespace Prisma {
     companyName: string
     jobTitle: string
     status: $Enums.ApplicationStatus
+    mode: $Enums.WorkMode
     website?: string | null
     jobUrl?: string | null
     description: string
@@ -3833,6 +3879,7 @@ export namespace Prisma {
     companyName: string
     jobTitle: string
     status: $Enums.ApplicationStatus
+    mode: $Enums.WorkMode
     website?: string | null
     jobUrl?: string | null
     description: string
@@ -3851,6 +3898,7 @@ export namespace Prisma {
     companyName?: StringFieldUpdateOperationsInput | string
     jobTitle?: StringFieldUpdateOperationsInput | string
     status?: EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+    mode?: EnumWorkModeFieldUpdateOperationsInput | $Enums.WorkMode
     website?: NullableStringFieldUpdateOperationsInput | string | null
     jobUrl?: NullableStringFieldUpdateOperationsInput | string | null
     description?: StringFieldUpdateOperationsInput | string
@@ -3872,6 +3920,7 @@ export namespace Prisma {
     companyName?: StringFieldUpdateOperationsInput | string
     jobTitle?: StringFieldUpdateOperationsInput | string
     status?: EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+    mode?: EnumWorkModeFieldUpdateOperationsInput | $Enums.WorkMode
     website?: NullableStringFieldUpdateOperationsInput | string | null
     jobUrl?: NullableStringFieldUpdateOperationsInput | string | null
     description?: StringFieldUpdateOperationsInput | string
@@ -3892,6 +3941,7 @@ export namespace Prisma {
     companyName: string
     jobTitle: string
     status: $Enums.ApplicationStatus
+    mode: $Enums.WorkMode
     website?: string | null
     jobUrl?: string | null
     description: string
@@ -3910,6 +3960,7 @@ export namespace Prisma {
     companyName?: StringFieldUpdateOperationsInput | string
     jobTitle?: StringFieldUpdateOperationsInput | string
     status?: EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+    mode?: EnumWorkModeFieldUpdateOperationsInput | $Enums.WorkMode
     website?: NullableStringFieldUpdateOperationsInput | string | null
     jobUrl?: NullableStringFieldUpdateOperationsInput | string | null
     description?: StringFieldUpdateOperationsInput | string
@@ -3930,6 +3981,7 @@ export namespace Prisma {
     companyName?: StringFieldUpdateOperationsInput | string
     jobTitle?: StringFieldUpdateOperationsInput | string
     status?: EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+    mode?: EnumWorkModeFieldUpdateOperationsInput | $Enums.WorkMode
     website?: NullableStringFieldUpdateOperationsInput | string | null
     jobUrl?: NullableStringFieldUpdateOperationsInput | string | null
     description?: StringFieldUpdateOperationsInput | string
@@ -4101,6 +4153,13 @@ export namespace Prisma {
     not?: NestedEnumApplicationStatusFilter<$PrismaModel> | $Enums.ApplicationStatus
   }
 
+  export type EnumWorkModeFilter<$PrismaModel = never> = {
+    equals?: $Enums.WorkMode | EnumWorkModeFieldRefInput<$PrismaModel>
+    in?: $Enums.WorkMode[] | ListEnumWorkModeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WorkMode[] | ListEnumWorkModeFieldRefInput<$PrismaModel>
+    not?: NestedEnumWorkModeFilter<$PrismaModel> | $Enums.WorkMode
+  }
+
   export type EnumApplicationTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.ApplicationType | EnumApplicationTypeFieldRefInput<$PrismaModel>
     in?: $Enums.ApplicationType[] | ListEnumApplicationTypeFieldRefInput<$PrismaModel>
@@ -4130,6 +4189,7 @@ export namespace Prisma {
     companyName?: SortOrder
     jobTitle?: SortOrder
     status?: SortOrder
+    mode?: SortOrder
     website?: SortOrder
     jobUrl?: SortOrder
     description?: SortOrder
@@ -4154,6 +4214,7 @@ export namespace Prisma {
     companyName?: SortOrder
     jobTitle?: SortOrder
     status?: SortOrder
+    mode?: SortOrder
     website?: SortOrder
     jobUrl?: SortOrder
     description?: SortOrder
@@ -4174,6 +4235,7 @@ export namespace Prisma {
     companyName?: SortOrder
     jobTitle?: SortOrder
     status?: SortOrder
+    mode?: SortOrder
     website?: SortOrder
     jobUrl?: SortOrder
     description?: SortOrder
@@ -4216,6 +4278,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumApplicationStatusFilter<$PrismaModel>
     _max?: NestedEnumApplicationStatusFilter<$PrismaModel>
+  }
+
+  export type EnumWorkModeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.WorkMode | EnumWorkModeFieldRefInput<$PrismaModel>
+    in?: $Enums.WorkMode[] | ListEnumWorkModeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WorkMode[] | ListEnumWorkModeFieldRefInput<$PrismaModel>
+    not?: NestedEnumWorkModeWithAggregatesFilter<$PrismaModel> | $Enums.WorkMode
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumWorkModeFilter<$PrismaModel>
+    _max?: NestedEnumWorkModeFilter<$PrismaModel>
   }
 
   export type EnumApplicationTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -4304,6 +4376,10 @@ export namespace Prisma {
 
   export type EnumApplicationStatusFieldUpdateOperationsInput = {
     set?: $Enums.ApplicationStatus
+  }
+
+  export type EnumWorkModeFieldUpdateOperationsInput = {
+    set?: $Enums.WorkMode
   }
 
   export type EnumApplicationTypeFieldUpdateOperationsInput = {
@@ -4446,6 +4522,13 @@ export namespace Prisma {
     not?: NestedEnumApplicationStatusFilter<$PrismaModel> | $Enums.ApplicationStatus
   }
 
+  export type NestedEnumWorkModeFilter<$PrismaModel = never> = {
+    equals?: $Enums.WorkMode | EnumWorkModeFieldRefInput<$PrismaModel>
+    in?: $Enums.WorkMode[] | ListEnumWorkModeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WorkMode[] | ListEnumWorkModeFieldRefInput<$PrismaModel>
+    not?: NestedEnumWorkModeFilter<$PrismaModel> | $Enums.WorkMode
+  }
+
   export type NestedEnumApplicationTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.ApplicationType | EnumApplicationTypeFieldRefInput<$PrismaModel>
     in?: $Enums.ApplicationType[] | ListEnumApplicationTypeFieldRefInput<$PrismaModel>
@@ -4501,6 +4584,16 @@ export namespace Prisma {
     _max?: NestedEnumApplicationStatusFilter<$PrismaModel>
   }
 
+  export type NestedEnumWorkModeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.WorkMode | EnumWorkModeFieldRefInput<$PrismaModel>
+    in?: $Enums.WorkMode[] | ListEnumWorkModeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WorkMode[] | ListEnumWorkModeFieldRefInput<$PrismaModel>
+    not?: NestedEnumWorkModeWithAggregatesFilter<$PrismaModel> | $Enums.WorkMode
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumWorkModeFilter<$PrismaModel>
+    _max?: NestedEnumWorkModeFilter<$PrismaModel>
+  }
+
   export type NestedEnumApplicationTypeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.ApplicationType | EnumApplicationTypeFieldRefInput<$PrismaModel>
     in?: $Enums.ApplicationType[] | ListEnumApplicationTypeFieldRefInput<$PrismaModel>
@@ -4529,6 +4622,7 @@ export namespace Prisma {
     companyName: string
     jobTitle: string
     status: $Enums.ApplicationStatus
+    mode: $Enums.WorkMode
     website?: string | null
     jobUrl?: string | null
     description: string
@@ -4548,6 +4642,7 @@ export namespace Prisma {
     companyName: string
     jobTitle: string
     status: $Enums.ApplicationStatus
+    mode: $Enums.WorkMode
     website?: string | null
     jobUrl?: string | null
     description: string
@@ -4597,6 +4692,7 @@ export namespace Prisma {
     companyName?: StringFilter<"Application"> | string
     jobTitle?: StringFilter<"Application"> | string
     status?: EnumApplicationStatusFilter<"Application"> | $Enums.ApplicationStatus
+    mode?: EnumWorkModeFilter<"Application"> | $Enums.WorkMode
     website?: StringNullableFilter<"Application"> | string | null
     jobUrl?: StringNullableFilter<"Application"> | string | null
     description?: StringFilter<"Application"> | string
@@ -4676,6 +4772,7 @@ export namespace Prisma {
     companyName: string
     jobTitle: string
     status: $Enums.ApplicationStatus
+    mode: $Enums.WorkMode
     website?: string | null
     jobUrl?: string | null
     description: string
@@ -4694,6 +4791,7 @@ export namespace Prisma {
     companyName?: StringFieldUpdateOperationsInput | string
     jobTitle?: StringFieldUpdateOperationsInput | string
     status?: EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+    mode?: EnumWorkModeFieldUpdateOperationsInput | $Enums.WorkMode
     website?: NullableStringFieldUpdateOperationsInput | string | null
     jobUrl?: NullableStringFieldUpdateOperationsInput | string | null
     description?: StringFieldUpdateOperationsInput | string
@@ -4713,6 +4811,7 @@ export namespace Prisma {
     companyName?: StringFieldUpdateOperationsInput | string
     jobTitle?: StringFieldUpdateOperationsInput | string
     status?: EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+    mode?: EnumWorkModeFieldUpdateOperationsInput | $Enums.WorkMode
     website?: NullableStringFieldUpdateOperationsInput | string | null
     jobUrl?: NullableStringFieldUpdateOperationsInput | string | null
     description?: StringFieldUpdateOperationsInput | string
@@ -4732,6 +4831,7 @@ export namespace Prisma {
     companyName?: StringFieldUpdateOperationsInput | string
     jobTitle?: StringFieldUpdateOperationsInput | string
     status?: EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+    mode?: EnumWorkModeFieldUpdateOperationsInput | $Enums.WorkMode
     website?: NullableStringFieldUpdateOperationsInput | string | null
     jobUrl?: NullableStringFieldUpdateOperationsInput | string | null
     description?: StringFieldUpdateOperationsInput | string

@@ -37,6 +37,7 @@ export const createApplication = async (data: ApplicationFormValues) => {
       companyName: validatedForm.companyName,
       jobTitle: validatedForm.jobTitle,
       status: validatedForm.status,
+      mode: validatedForm.mode,
       type: validatedForm.type,
       website: validatedForm.website || null,
       jobUrl: validatedForm.jobUrl || null,

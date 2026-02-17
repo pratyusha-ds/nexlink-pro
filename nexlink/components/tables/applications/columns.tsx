@@ -1,21 +1,25 @@
 "use client";
 
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { Badge } from "@/components/ui/badge";
 import { ColumnDef } from "@tanstack/react-table";
-import { Info } from "lucide-react";
+import { StatusDropdown } from "../StatusDropdown";
 
 export type Application = {
+  id: number;
   jobTitle: string;
   companyName: string;
   status: status;
   type: type;
+  mode: mode;
   notes: string | null;
   interviewDnT: Date | null;
+  website?: string | null;
+  jobUrl?: string | null;
+  description?: string | null;
+  email?: string | null;
+  location?: string | null;
+  salary?: string | null;
+  logoUrl?: string | null;
 };
 
 export type status =
@@ -24,117 +28,131 @@ export type status =
   | "BEING_PROCESSED"
   | "WAITING_FOR_INTERVIEW"
   | "REJECTED";
-export type type = "REMOTE" | "ON_SITE" | "HYBRID";
-
-function formatStatus(status: status) {
-  const statusConfig = {
-    PENDING: {
-      label: "Pending",
-      className: "bg-yellow-500 hover:bg-yellow-600",
-    },
-    APPLIED: { label: "Applied", className: "bg-malachite hover:bg-primary" },
-    BEING_PROCESSED: {
-      label: "Being Processed",
-      className: "bg-orange-500 hover:bg-orange-600",
-    },
-    WAITING_FOR_INTERVIEW: {
-      label: "Waiting for Interview",
-      className: "bg-purple-500 hover:bg-purple-600",
-    },
-    REJECTED: { label: "Rejected", className: "bg-red-500 hover:bg-red-600" },
-  };
-
-  const config = statusConfig[status];
-
-  return (
-    <Badge className={`${config.className} text-white`}>{config.label}</Badge>
-  );
-}
+export type mode = "REMOTE" | "ON_SITE" | "HYBRID";
+export type type = "REGULAR" | "INTERNSHIP";
 
 function formatType(type: type) {
   const typeLabels = {
+    REGULAR: "Regular",
+    INTERNSHIP: "Internship",
+  };
+
+  return <span className="text-muted-foreground">{typeLabels[type]}</span>;
+}
+
+function formatMode(mode: mode) {
+  const modeLabels = {
     REMOTE: "Remote",
-    ON_SITE: "On-site",
+    ON_SITE: "On Site",
     HYBRID: "Hybrid",
   };
 
-  return <span className="font-semibold">{typeLabels[type]}</span>;
+  return <span className="text-muted-foreground">{modeLabels[mode]}</span>;
 }
 
-function formatDate(date: Date | null) {
-  if (!date) return <span className="text-muted-foreground">-</span>;
-
-  const dateObj = new Date(date);
-  return (
-    <span>
-      {dateObj.toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-      })}
-    </span>
-  );
-}
-
-export const columns: ColumnDef<Application>[] = [
-  {
-    accessorKey: "jobTitle",
-    header: "Position",
-    size: 100,
-    meta: {
-      className: "w-[100px]",
+export const getColumns = (
+  onStatusChange?: (id: number, status: string) => void,
+): ColumnDef<Application>[] => [
+    {
+      accessorKey: "jobTitle",
+      header: "Position",
+      size: 100,
+      meta: {
+        className: "w-[100px]",
+      },
     },
-  },
-  {
-    accessorKey: "companyName",
-    header: "Company",
-    cell: ({ row }) => {
-      const notes = row.original.notes;
-      const companyName = row.getValue("companyName") as string;
+    {
+      accessorKey: "companyName",
+      header: "Company",
+      cell: ({ row }) => {
+        const notes = row.original.notes;
+        const companyName = row.getValue("companyName") as string;
 
-      if (notes) {
+        if (notes) {
+          return (
+            <div className="flex items-center gap-2">
+              <span>{companyName}</span>
+            </div>
+          );
+        }
+
+        return <span>{companyName}</span>;
+      },
+      meta: {
+        className: "w-[200px]",
+      },
+    },
+    {
+      accessorKey: "status",
+      header: "Status",
+      cell: ({ row }) => {
+        const status = row.getValue("status") as string;
+        if (onStatusChange) {
+          return (
+            <StatusDropdown
+              status={status}
+              onStatusChange={(newStatus) =>
+                onStatusChange(row.original.id, newStatus)
+              }
+            />
+          );
+        }
+        const statusConfig = {
+          PENDING: {
+            label: "Pending",
+            className: "bg-yellow-500 hover:bg-yellow-600",
+          },
+          APPLIED: {
+            label: "Applied",
+            className: "bg-malachite hover:bg-primary",
+          },
+          BEING_PROCESSED: {
+            label: "Being Processed",
+            className: "bg-orange-500 hover:bg-orange-600",
+          },
+          WAITING_FOR_INTERVIEW: {
+            label: "Waiting for Interview",
+            className: "bg-purple-500 hover:bg-purple-600",
+          },
+          REJECTED: {
+            label: "Rejected",
+            className: "bg-red-500 hover:bg-red-600",
+          },
+        };
+        const config = statusConfig[status as keyof typeof statusConfig] || {
+          label: status,
+          className: "bg-gray-100 text-gray-700",
+        };
         return (
-          <div className="flex items-center gap-2">
-            <span>{companyName}</span>
-            <Popover>
-              <PopoverTrigger asChild>
-                <button className="text-muted-foreground hover:text-foreground">
-                  <Info className="h-4 w-4" />
-                </button>
-              </PopoverTrigger>
-              <PopoverContent className="w-80">
-                <div className="space-y-1">
-                  <h4 className="text-sm font-semibold">Notes</h4>
-                  <p className="text-sm text-muted-foreground">{notes}</p>
-                </div>
-              </PopoverContent>
-            </Popover>
-          </div>
+          <Badge className={`${config.className} text-white`}>
+            {config.label}
+          </Badge>
         );
-      }
-
-      return <span>{companyName}</span>;
+      },
+      size: 180,
+      meta: {
+        className: "w-[180px]",
+        filterKey: "status",
+      },
     },
-    meta: {
-      className: "w-[200px]",
+    {
+      accessorKey: "type",
+      header: "Type",
+      cell: ({ row }) => formatType(row.getValue("type")),
+      size: 100,
+      meta: {
+        className: "w-[100px]",
+        filterKey: "type",
+      },
     },
-  },
-  {
-    accessorKey: "status",
-    header: "Status",
-    cell: ({ row }) => formatStatus(row.getValue("status")),
-    size: 180,
-    meta: {
-      className: "w-[180px]",
+    {
+      accessorKey: "mode",
+      header: "Mode",
+      cell: ({ row }) => formatMode(row.getValue("mode")),
+      size: 100,
+      meta: {
+        className: "w-[100px]",
+        filterKey: "mode",
+      },
     },
-  },
-  {
-    accessorKey: "type",
-    header: "Type",
-    cell: ({ row }) => formatType(row.getValue("type")),
-    size: 100,
-    meta: {
-      className: "w-[100px]",
-    },
-  },
-];
+  ];

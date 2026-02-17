@@ -29,7 +29,8 @@ export default function ApplicationForm() {
       description: "",
       email: "",
       status: "PENDING",
-      type: "REMOTE",
+      type: "REGULAR",
+      mode: "REMOTE",
     },
   });
 
@@ -44,9 +45,9 @@ export default function ApplicationForm() {
 
   return (
     <Card className="border-gray-200 shadow-none rounded-md">
-      <CardContent className="pt-4">
+      <CardContent className="">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <CompanySection form={form} />
             <StatusSection form={form} />
 

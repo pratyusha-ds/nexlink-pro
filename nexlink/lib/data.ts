@@ -39,10 +39,27 @@ export async function getApplications() {
       companyName: true,
       status: true,
       type: true,
+      mode: true,
       notes: true,
       interviewDnT: true,
+      website: true,
+      jobUrl: true,
+      description: true,
+      email: true,
+      location: true,
+      salary: true,
+      logoUrl: true,
     },
     orderBy: { id: "asc" },
+  });
+}
+
+export async function getApplicationById(id: number) {
+  const userId = await getCurrentUserId();
+  if (!userId) return null;
+
+  return await db.application.findFirst({
+    where: { id, userId },
   });
 }
 
@@ -76,4 +93,31 @@ export async function getTypeStats() {
     name: item.type,
     value: item._count.type,
   }));
+}
+
+export async function deleteApplications(ids: number[]) {
+  const userId = await getCurrentUserId();
+  if (!userId) return;
+
+  await db.application.deleteMany({
+    where: {
+      id: { in: ids },
+      userId,
+    },
+  });
+}
+
+export async function updateApplicationStatus(id: number, status: string) {
+  const userId = await getCurrentUserId();
+  if (!userId) return null;
+
+  return await db.application.update({
+    where: {
+      id,
+      userId,
+    },
+    data: {
+      status: status as any,
+    },
+  });
 }

@@ -137,6 +137,7 @@ exports.Prisma.ApplicationScalarFieldEnum = {
   companyName: 'companyName',
   jobTitle: 'jobTitle',
   status: 'status',
+  mode: 'mode',
   website: 'website',
   jobUrl: 'jobUrl',
   description: 'description',
@@ -173,10 +174,15 @@ exports.ApplicationStatus = exports.$Enums.ApplicationStatus = {
   REJECTED: 'REJECTED'
 };
 
-exports.ApplicationType = exports.$Enums.ApplicationType = {
+exports.WorkMode = exports.$Enums.WorkMode = {
   REMOTE: 'REMOTE',
   ON_SITE: 'ON_SITE',
   HYBRID: 'HYBRID'
+};
+
+exports.ApplicationType = exports.$Enums.ApplicationType = {
+  REGULAR: 'REGULAR',
+  INTERNSHIP: 'INTERNSHIP'
 };
 
 exports.Prisma.ModelName = {
