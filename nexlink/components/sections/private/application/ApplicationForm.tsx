@@ -4,8 +4,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
+import { useEffect } from "react";
 
 import {
   applicationSchema,
@@ -19,20 +20,35 @@ import StatusSection from "./StatusSection";
 
 export default function ApplicationForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const company = searchParams.get("company") || "";
+  const title = searchParams.get("title") || "";
+  const location = searchParams.get("location") || "";
+  const jobUrl = searchParams.get("url") || "";
 
   const form = useForm<ApplicationFormValues>({
     resolver: zodResolver(applicationSchema),
     defaultValues: {
-      companyName: "",
-      jobTitle: "",
-      location: "",
-      description: "",
+      companyName: company,
+      jobTitle: title,
+      location: location,
+      description: jobUrl ? `Source: ${jobUrl}` : "",
       email: "",
       status: "PENDING",
       type: "REGULAR",
       mode: "REMOTE",
     },
   });
+
+  useEffect(() => {
+    if (company || title) {
+      form.setValue("companyName", company);
+      form.setValue("jobTitle", title);
+      form.setValue("location", location);
+      if (jobUrl) form.setValue("description", `Source: ${jobUrl}`);
+    }
+  }, [company, title, location, jobUrl, form]);
 
   async function onSubmit(values: ApplicationFormValues) {
     try {
@@ -45,7 +61,7 @@ export default function ApplicationForm() {
 
   return (
     <Card className="border-gray-200 shadow-none rounded-md">
-      <CardContent className="">
+      <CardContent className="pt-6">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <CompanySection form={form} />
