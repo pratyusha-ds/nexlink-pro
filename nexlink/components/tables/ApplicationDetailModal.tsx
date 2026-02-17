@@ -93,7 +93,10 @@ export function ApplicationDetailModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-125 max-h-[85vh] overflow-hidden flex flex-col p-0 gap-0 border-gray-200 shadow-none drop-shadow-none">
+      <DialogContent
+        className="sm:max-w-125 md:max-w-200 w-full max-h-[85vh] overflow-hidden flex flex-col p-0 gap-0 border-gray-200 shadow-none drop-shadow-none"
+        showCloseButton={false}
+      >
         <DialogHeader className="p-6 pb-4">
           <div className="flex items-start gap-4">
             {application.logoUrl ? (
@@ -120,7 +123,9 @@ export function ApplicationDetailModal({
                 {onStatusChange ? (
                   <StatusDropdown
                     status={application.status}
-                    onStatusChange={(status) => onStatusChange(application.id, status)}
+                    onStatusChange={(status) =>
+                      onStatusChange(application.id, status)
+                    }
                   />
                 ) : (
                   <StatusBadge status={application.status} />

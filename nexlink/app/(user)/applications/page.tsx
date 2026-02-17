@@ -1,13 +1,23 @@
 "use client";
 
 import UserPage from "@/components/page/UserPage";
-import { Application, getColumns } from "@/components/tables/applications/columns";
+import {
+  Application,
+  getColumns,
+} from "@/components/tables/applications/columns";
 import { DataTable } from "@/components/tables/DataTable";
 import { ApplicationDetailModal } from "@/components/tables/ApplicationDetailModal";
 import { DeleteConfirmDialog } from "@/components/tables/DeleteConfirmDialog";
+import { ApplicationEditModal } from "@/components/sections/private/application/ApplicationEditModal";
 import { FilterOption } from "@/components/tables/TableFilters";
-import { getApplications, getApplicationById, deleteApplications, updateApplicationStatus } from "@/lib/data";
+import {
+  getApplications,
+  getApplicationById,
+  deleteApplications,
+  updateApplicationStatus,
+} from "@/lib/data";
 import { useEffect, useState } from "react";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
 const statusOptions: FilterOption[] = [
   {
@@ -47,13 +57,21 @@ const modeOptions: FilterOption[] = [
 ];
 
 const ApplicationsPage = () => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [applications, setApplications] = useState<Application[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedApp, setSelectedApp] = useState<Application | null>(null);
-  const [showDetailModal, setShowDetailModal] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [deleteId, setDeleteId] = useState<number | null>(null);
 
+  const selectedId = searchParams.get("id");
+  const isEditMode = searchParams.get("edit") === "true";
+
+  const handleView = async (row: Application) => {
+    router.push(`${pathname}?id=${row.id}`);
+  };
   useEffect(() => {
     getApplications().then((data) => {
       setApplications(data);
@@ -61,13 +79,13 @@ const ApplicationsPage = () => {
     });
   }, []);
 
-  const handleView = async (row: Application) => {
-    const fullApp = await getApplicationById(row.id);
-    if (fullApp) {
-      setSelectedApp(fullApp as Application);
-      setShowDetailModal(true);
+  useEffect(() => {
+    if (selectedId) {
+      getApplicationById(Number(selectedId)).then((data) => {
+        setSelectedApp(data as Application);
+      });
     }
-  };
+  }, [selectedId]);
 
   return (
     <UserPage
@@ -92,9 +110,6 @@ const ApplicationsPage = () => {
           setApplications(data);
         }}
         onView={handleView}
-        onEdit={(id) => {
-          console.log("Edit:", id);
-        }}
         onStatusChange={async (id, status) => {
           await updateApplicationStatus(id, status);
           const data = await getApplications();
@@ -103,11 +118,11 @@ const ApplicationsPage = () => {
       />
 
       <ApplicationDetailModal
-        open={showDetailModal}
-        onOpenChange={setShowDetailModal}
+        open={!!selectedId && !isEditMode}
+        onOpenChange={() => router.push(pathname)}
         application={selectedApp}
-        onEdit={(id) => {
-          console.log("Edit:", id);
+        onEdit={async (id) => {
+          router.push(`${pathname}?=id=${id}&edit=true`);
         }}
         onDelete={(id) => {
           setDeleteId(id);
@@ -130,10 +145,20 @@ const ApplicationsPage = () => {
         onConfirm={async () => {
           if (deleteId) {
             await deleteApplications([deleteId]);
-            setShowDetailModal(false);
+            router.push(pathname);
             const data = await getApplications();
             setApplications(data);
           }
+        }}
+      />
+
+      <ApplicationEditModal
+        open={isEditMode}
+        onOpenChange={() => router.push(pathname)}
+        application={selectedApp}
+        onSuccess={async () => {
+          const data = await getApplications();
+          setApplications(data);
         }}
       />
     </UserPage>
