@@ -23,6 +23,11 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  * 
  */
 export type Application = $Result.DefaultSelection<Prisma.$ApplicationPayload>
+/**
+ * Model CachedJob
+ * 
+ */
+export type CachedJob = $Result.DefaultSelection<Prisma.$CachedJobPayload>
 
 /**
  * Enums
@@ -205,6 +210,16 @@ export class PrismaClient<
     * ```
     */
   get application(): Prisma.ApplicationDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.cachedJob`: Exposes CRUD operations for the **CachedJob** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CachedJobs
+    * const cachedJobs = await prisma.cachedJob.findMany()
+    * ```
+    */
+  get cachedJob(): Prisma.CachedJobDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -640,7 +655,8 @@ export namespace Prisma {
 
   export const ModelName: {
     User: 'User',
-    Application: 'Application'
+    Application: 'Application',
+    CachedJob: 'CachedJob'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -656,7 +672,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "application"
+      modelProps: "user" | "application" | "cachedJob"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -808,6 +824,80 @@ export namespace Prisma {
           }
         }
       }
+      CachedJob: {
+        payload: Prisma.$CachedJobPayload<ExtArgs>
+        fields: Prisma.CachedJobFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CachedJobFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CachedJobPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CachedJobFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CachedJobPayload>
+          }
+          findFirst: {
+            args: Prisma.CachedJobFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CachedJobPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CachedJobFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CachedJobPayload>
+          }
+          findMany: {
+            args: Prisma.CachedJobFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CachedJobPayload>[]
+          }
+          create: {
+            args: Prisma.CachedJobCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CachedJobPayload>
+          }
+          createMany: {
+            args: Prisma.CachedJobCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CachedJobCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CachedJobPayload>[]
+          }
+          delete: {
+            args: Prisma.CachedJobDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CachedJobPayload>
+          }
+          update: {
+            args: Prisma.CachedJobUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CachedJobPayload>
+          }
+          deleteMany: {
+            args: Prisma.CachedJobDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CachedJobUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CachedJobUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CachedJobPayload>[]
+          }
+          upsert: {
+            args: Prisma.CachedJobUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CachedJobPayload>
+          }
+          aggregate: {
+            args: Prisma.CachedJobAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCachedJob>
+          }
+          groupBy: {
+            args: Prisma.CachedJobGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CachedJobGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CachedJobCountArgs<ExtArgs>
+            result: $Utils.Optional<CachedJobCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -918,6 +1008,7 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     user?: UserOmit
     application?: ApplicationOmit
+    cachedJob?: CachedJobOmit
   }
 
   /* Types for Logging */
@@ -3399,6 +3490,1040 @@ export namespace Prisma {
 
 
   /**
+   * Model CachedJob
+   */
+
+  export type AggregateCachedJob = {
+    _count: CachedJobCountAggregateOutputType | null
+    _min: CachedJobMinAggregateOutputType | null
+    _max: CachedJobMaxAggregateOutputType | null
+  }
+
+  export type CachedJobMinAggregateOutputType = {
+    id: string | null
+    title: string | null
+    company: string | null
+    location: string | null
+    date: string | null
+    url: string | null
+    logo: string | null
+    cachedAt: Date | null
+  }
+
+  export type CachedJobMaxAggregateOutputType = {
+    id: string | null
+    title: string | null
+    company: string | null
+    location: string | null
+    date: string | null
+    url: string | null
+    logo: string | null
+    cachedAt: Date | null
+  }
+
+  export type CachedJobCountAggregateOutputType = {
+    id: number
+    title: number
+    company: number
+    location: number
+    date: number
+    url: number
+    logo: number
+    cachedAt: number
+    _all: number
+  }
+
+
+  export type CachedJobMinAggregateInputType = {
+    id?: true
+    title?: true
+    company?: true
+    location?: true
+    date?: true
+    url?: true
+    logo?: true
+    cachedAt?: true
+  }
+
+  export type CachedJobMaxAggregateInputType = {
+    id?: true
+    title?: true
+    company?: true
+    location?: true
+    date?: true
+    url?: true
+    logo?: true
+    cachedAt?: true
+  }
+
+  export type CachedJobCountAggregateInputType = {
+    id?: true
+    title?: true
+    company?: true
+    location?: true
+    date?: true
+    url?: true
+    logo?: true
+    cachedAt?: true
+    _all?: true
+  }
+
+  export type CachedJobAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CachedJob to aggregate.
+     */
+    where?: CachedJobWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CachedJobs to fetch.
+     */
+    orderBy?: CachedJobOrderByWithRelationInput | CachedJobOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CachedJobWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CachedJobs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CachedJobs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CachedJobs
+    **/
+    _count?: true | CachedJobCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CachedJobMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CachedJobMaxAggregateInputType
+  }
+
+  export type GetCachedJobAggregateType<T extends CachedJobAggregateArgs> = {
+        [P in keyof T & keyof AggregateCachedJob]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCachedJob[P]>
+      : GetScalarType<T[P], AggregateCachedJob[P]>
+  }
+
+
+
+
+  export type CachedJobGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CachedJobWhereInput
+    orderBy?: CachedJobOrderByWithAggregationInput | CachedJobOrderByWithAggregationInput[]
+    by: CachedJobScalarFieldEnum[] | CachedJobScalarFieldEnum
+    having?: CachedJobScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CachedJobCountAggregateInputType | true
+    _min?: CachedJobMinAggregateInputType
+    _max?: CachedJobMaxAggregateInputType
+  }
+
+  export type CachedJobGroupByOutputType = {
+    id: string
+    title: string
+    company: string
+    location: string
+    date: string
+    url: string
+    logo: string | null
+    cachedAt: Date
+    _count: CachedJobCountAggregateOutputType | null
+    _min: CachedJobMinAggregateOutputType | null
+    _max: CachedJobMaxAggregateOutputType | null
+  }
+
+  type GetCachedJobGroupByPayload<T extends CachedJobGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CachedJobGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CachedJobGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CachedJobGroupByOutputType[P]>
+            : GetScalarType<T[P], CachedJobGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CachedJobSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    company?: boolean
+    location?: boolean
+    date?: boolean
+    url?: boolean
+    logo?: boolean
+    cachedAt?: boolean
+  }, ExtArgs["result"]["cachedJob"]>
+
+  export type CachedJobSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    company?: boolean
+    location?: boolean
+    date?: boolean
+    url?: boolean
+    logo?: boolean
+    cachedAt?: boolean
+  }, ExtArgs["result"]["cachedJob"]>
+
+  export type CachedJobSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    company?: boolean
+    location?: boolean
+    date?: boolean
+    url?: boolean
+    logo?: boolean
+    cachedAt?: boolean
+  }, ExtArgs["result"]["cachedJob"]>
+
+  export type CachedJobSelectScalar = {
+    id?: boolean
+    title?: boolean
+    company?: boolean
+    location?: boolean
+    date?: boolean
+    url?: boolean
+    logo?: boolean
+    cachedAt?: boolean
+  }
+
+  export type CachedJobOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "company" | "location" | "date" | "url" | "logo" | "cachedAt", ExtArgs["result"]["cachedJob"]>
+
+  export type $CachedJobPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CachedJob"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      title: string
+      company: string
+      location: string
+      date: string
+      url: string
+      logo: string | null
+      cachedAt: Date
+    }, ExtArgs["result"]["cachedJob"]>
+    composites: {}
+  }
+
+  type CachedJobGetPayload<S extends boolean | null | undefined | CachedJobDefaultArgs> = $Result.GetResult<Prisma.$CachedJobPayload, S>
+
+  type CachedJobCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CachedJobFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CachedJobCountAggregateInputType | true
+    }
+
+  export interface CachedJobDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CachedJob'], meta: { name: 'CachedJob' } }
+    /**
+     * Find zero or one CachedJob that matches the filter.
+     * @param {CachedJobFindUniqueArgs} args - Arguments to find a CachedJob
+     * @example
+     * // Get one CachedJob
+     * const cachedJob = await prisma.cachedJob.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CachedJobFindUniqueArgs>(args: SelectSubset<T, CachedJobFindUniqueArgs<ExtArgs>>): Prisma__CachedJobClient<$Result.GetResult<Prisma.$CachedJobPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one CachedJob that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CachedJobFindUniqueOrThrowArgs} args - Arguments to find a CachedJob
+     * @example
+     * // Get one CachedJob
+     * const cachedJob = await prisma.cachedJob.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CachedJobFindUniqueOrThrowArgs>(args: SelectSubset<T, CachedJobFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CachedJobClient<$Result.GetResult<Prisma.$CachedJobPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CachedJob that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CachedJobFindFirstArgs} args - Arguments to find a CachedJob
+     * @example
+     * // Get one CachedJob
+     * const cachedJob = await prisma.cachedJob.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CachedJobFindFirstArgs>(args?: SelectSubset<T, CachedJobFindFirstArgs<ExtArgs>>): Prisma__CachedJobClient<$Result.GetResult<Prisma.$CachedJobPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CachedJob that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CachedJobFindFirstOrThrowArgs} args - Arguments to find a CachedJob
+     * @example
+     * // Get one CachedJob
+     * const cachedJob = await prisma.cachedJob.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CachedJobFindFirstOrThrowArgs>(args?: SelectSubset<T, CachedJobFindFirstOrThrowArgs<ExtArgs>>): Prisma__CachedJobClient<$Result.GetResult<Prisma.$CachedJobPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more CachedJobs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CachedJobFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CachedJobs
+     * const cachedJobs = await prisma.cachedJob.findMany()
+     * 
+     * // Get first 10 CachedJobs
+     * const cachedJobs = await prisma.cachedJob.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const cachedJobWithIdOnly = await prisma.cachedJob.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CachedJobFindManyArgs>(args?: SelectSubset<T, CachedJobFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CachedJobPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a CachedJob.
+     * @param {CachedJobCreateArgs} args - Arguments to create a CachedJob.
+     * @example
+     * // Create one CachedJob
+     * const CachedJob = await prisma.cachedJob.create({
+     *   data: {
+     *     // ... data to create a CachedJob
+     *   }
+     * })
+     * 
+     */
+    create<T extends CachedJobCreateArgs>(args: SelectSubset<T, CachedJobCreateArgs<ExtArgs>>): Prisma__CachedJobClient<$Result.GetResult<Prisma.$CachedJobPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many CachedJobs.
+     * @param {CachedJobCreateManyArgs} args - Arguments to create many CachedJobs.
+     * @example
+     * // Create many CachedJobs
+     * const cachedJob = await prisma.cachedJob.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CachedJobCreateManyArgs>(args?: SelectSubset<T, CachedJobCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CachedJobs and returns the data saved in the database.
+     * @param {CachedJobCreateManyAndReturnArgs} args - Arguments to create many CachedJobs.
+     * @example
+     * // Create many CachedJobs
+     * const cachedJob = await prisma.cachedJob.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CachedJobs and only return the `id`
+     * const cachedJobWithIdOnly = await prisma.cachedJob.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CachedJobCreateManyAndReturnArgs>(args?: SelectSubset<T, CachedJobCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CachedJobPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a CachedJob.
+     * @param {CachedJobDeleteArgs} args - Arguments to delete one CachedJob.
+     * @example
+     * // Delete one CachedJob
+     * const CachedJob = await prisma.cachedJob.delete({
+     *   where: {
+     *     // ... filter to delete one CachedJob
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CachedJobDeleteArgs>(args: SelectSubset<T, CachedJobDeleteArgs<ExtArgs>>): Prisma__CachedJobClient<$Result.GetResult<Prisma.$CachedJobPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one CachedJob.
+     * @param {CachedJobUpdateArgs} args - Arguments to update one CachedJob.
+     * @example
+     * // Update one CachedJob
+     * const cachedJob = await prisma.cachedJob.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CachedJobUpdateArgs>(args: SelectSubset<T, CachedJobUpdateArgs<ExtArgs>>): Prisma__CachedJobClient<$Result.GetResult<Prisma.$CachedJobPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more CachedJobs.
+     * @param {CachedJobDeleteManyArgs} args - Arguments to filter CachedJobs to delete.
+     * @example
+     * // Delete a few CachedJobs
+     * const { count } = await prisma.cachedJob.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CachedJobDeleteManyArgs>(args?: SelectSubset<T, CachedJobDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CachedJobs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CachedJobUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CachedJobs
+     * const cachedJob = await prisma.cachedJob.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CachedJobUpdateManyArgs>(args: SelectSubset<T, CachedJobUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CachedJobs and returns the data updated in the database.
+     * @param {CachedJobUpdateManyAndReturnArgs} args - Arguments to update many CachedJobs.
+     * @example
+     * // Update many CachedJobs
+     * const cachedJob = await prisma.cachedJob.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more CachedJobs and only return the `id`
+     * const cachedJobWithIdOnly = await prisma.cachedJob.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CachedJobUpdateManyAndReturnArgs>(args: SelectSubset<T, CachedJobUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CachedJobPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one CachedJob.
+     * @param {CachedJobUpsertArgs} args - Arguments to update or create a CachedJob.
+     * @example
+     * // Update or create a CachedJob
+     * const cachedJob = await prisma.cachedJob.upsert({
+     *   create: {
+     *     // ... data to create a CachedJob
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CachedJob we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CachedJobUpsertArgs>(args: SelectSubset<T, CachedJobUpsertArgs<ExtArgs>>): Prisma__CachedJobClient<$Result.GetResult<Prisma.$CachedJobPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of CachedJobs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CachedJobCountArgs} args - Arguments to filter CachedJobs to count.
+     * @example
+     * // Count the number of CachedJobs
+     * const count = await prisma.cachedJob.count({
+     *   where: {
+     *     // ... the filter for the CachedJobs we want to count
+     *   }
+     * })
+    **/
+    count<T extends CachedJobCountArgs>(
+      args?: Subset<T, CachedJobCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CachedJobCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CachedJob.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CachedJobAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CachedJobAggregateArgs>(args: Subset<T, CachedJobAggregateArgs>): Prisma.PrismaPromise<GetCachedJobAggregateType<T>>
+
+    /**
+     * Group by CachedJob.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CachedJobGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CachedJobGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CachedJobGroupByArgs['orderBy'] }
+        : { orderBy?: CachedJobGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CachedJobGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCachedJobGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CachedJob model
+   */
+  readonly fields: CachedJobFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CachedJob.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CachedJobClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CachedJob model
+   */
+  interface CachedJobFieldRefs {
+    readonly id: FieldRef<"CachedJob", 'String'>
+    readonly title: FieldRef<"CachedJob", 'String'>
+    readonly company: FieldRef<"CachedJob", 'String'>
+    readonly location: FieldRef<"CachedJob", 'String'>
+    readonly date: FieldRef<"CachedJob", 'String'>
+    readonly url: FieldRef<"CachedJob", 'String'>
+    readonly logo: FieldRef<"CachedJob", 'String'>
+    readonly cachedAt: FieldRef<"CachedJob", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CachedJob findUnique
+   */
+  export type CachedJobFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CachedJob
+     */
+    select?: CachedJobSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CachedJob
+     */
+    omit?: CachedJobOmit<ExtArgs> | null
+    /**
+     * Filter, which CachedJob to fetch.
+     */
+    where: CachedJobWhereUniqueInput
+  }
+
+  /**
+   * CachedJob findUniqueOrThrow
+   */
+  export type CachedJobFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CachedJob
+     */
+    select?: CachedJobSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CachedJob
+     */
+    omit?: CachedJobOmit<ExtArgs> | null
+    /**
+     * Filter, which CachedJob to fetch.
+     */
+    where: CachedJobWhereUniqueInput
+  }
+
+  /**
+   * CachedJob findFirst
+   */
+  export type CachedJobFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CachedJob
+     */
+    select?: CachedJobSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CachedJob
+     */
+    omit?: CachedJobOmit<ExtArgs> | null
+    /**
+     * Filter, which CachedJob to fetch.
+     */
+    where?: CachedJobWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CachedJobs to fetch.
+     */
+    orderBy?: CachedJobOrderByWithRelationInput | CachedJobOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CachedJobs.
+     */
+    cursor?: CachedJobWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CachedJobs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CachedJobs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CachedJobs.
+     */
+    distinct?: CachedJobScalarFieldEnum | CachedJobScalarFieldEnum[]
+  }
+
+  /**
+   * CachedJob findFirstOrThrow
+   */
+  export type CachedJobFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CachedJob
+     */
+    select?: CachedJobSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CachedJob
+     */
+    omit?: CachedJobOmit<ExtArgs> | null
+    /**
+     * Filter, which CachedJob to fetch.
+     */
+    where?: CachedJobWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CachedJobs to fetch.
+     */
+    orderBy?: CachedJobOrderByWithRelationInput | CachedJobOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CachedJobs.
+     */
+    cursor?: CachedJobWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CachedJobs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CachedJobs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CachedJobs.
+     */
+    distinct?: CachedJobScalarFieldEnum | CachedJobScalarFieldEnum[]
+  }
+
+  /**
+   * CachedJob findMany
+   */
+  export type CachedJobFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CachedJob
+     */
+    select?: CachedJobSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CachedJob
+     */
+    omit?: CachedJobOmit<ExtArgs> | null
+    /**
+     * Filter, which CachedJobs to fetch.
+     */
+    where?: CachedJobWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CachedJobs to fetch.
+     */
+    orderBy?: CachedJobOrderByWithRelationInput | CachedJobOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CachedJobs.
+     */
+    cursor?: CachedJobWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CachedJobs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CachedJobs.
+     */
+    skip?: number
+    distinct?: CachedJobScalarFieldEnum | CachedJobScalarFieldEnum[]
+  }
+
+  /**
+   * CachedJob create
+   */
+  export type CachedJobCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CachedJob
+     */
+    select?: CachedJobSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CachedJob
+     */
+    omit?: CachedJobOmit<ExtArgs> | null
+    /**
+     * The data needed to create a CachedJob.
+     */
+    data: XOR<CachedJobCreateInput, CachedJobUncheckedCreateInput>
+  }
+
+  /**
+   * CachedJob createMany
+   */
+  export type CachedJobCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CachedJobs.
+     */
+    data: CachedJobCreateManyInput | CachedJobCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CachedJob createManyAndReturn
+   */
+  export type CachedJobCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CachedJob
+     */
+    select?: CachedJobSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CachedJob
+     */
+    omit?: CachedJobOmit<ExtArgs> | null
+    /**
+     * The data used to create many CachedJobs.
+     */
+    data: CachedJobCreateManyInput | CachedJobCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CachedJob update
+   */
+  export type CachedJobUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CachedJob
+     */
+    select?: CachedJobSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CachedJob
+     */
+    omit?: CachedJobOmit<ExtArgs> | null
+    /**
+     * The data needed to update a CachedJob.
+     */
+    data: XOR<CachedJobUpdateInput, CachedJobUncheckedUpdateInput>
+    /**
+     * Choose, which CachedJob to update.
+     */
+    where: CachedJobWhereUniqueInput
+  }
+
+  /**
+   * CachedJob updateMany
+   */
+  export type CachedJobUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CachedJobs.
+     */
+    data: XOR<CachedJobUpdateManyMutationInput, CachedJobUncheckedUpdateManyInput>
+    /**
+     * Filter which CachedJobs to update
+     */
+    where?: CachedJobWhereInput
+    /**
+     * Limit how many CachedJobs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CachedJob updateManyAndReturn
+   */
+  export type CachedJobUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CachedJob
+     */
+    select?: CachedJobSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CachedJob
+     */
+    omit?: CachedJobOmit<ExtArgs> | null
+    /**
+     * The data used to update CachedJobs.
+     */
+    data: XOR<CachedJobUpdateManyMutationInput, CachedJobUncheckedUpdateManyInput>
+    /**
+     * Filter which CachedJobs to update
+     */
+    where?: CachedJobWhereInput
+    /**
+     * Limit how many CachedJobs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CachedJob upsert
+   */
+  export type CachedJobUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CachedJob
+     */
+    select?: CachedJobSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CachedJob
+     */
+    omit?: CachedJobOmit<ExtArgs> | null
+    /**
+     * The filter to search for the CachedJob to update in case it exists.
+     */
+    where: CachedJobWhereUniqueInput
+    /**
+     * In case the CachedJob found by the `where` argument doesn't exist, create a new CachedJob with this data.
+     */
+    create: XOR<CachedJobCreateInput, CachedJobUncheckedCreateInput>
+    /**
+     * In case the CachedJob was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CachedJobUpdateInput, CachedJobUncheckedUpdateInput>
+  }
+
+  /**
+   * CachedJob delete
+   */
+  export type CachedJobDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CachedJob
+     */
+    select?: CachedJobSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CachedJob
+     */
+    omit?: CachedJobOmit<ExtArgs> | null
+    /**
+     * Filter which CachedJob to delete.
+     */
+    where: CachedJobWhereUniqueInput
+  }
+
+  /**
+   * CachedJob deleteMany
+   */
+  export type CachedJobDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CachedJobs to delete
+     */
+    where?: CachedJobWhereInput
+    /**
+     * Limit how many CachedJobs to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * CachedJob without action
+   */
+  export type CachedJobDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CachedJob
+     */
+    select?: CachedJobSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CachedJob
+     */
+    omit?: CachedJobOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -3448,6 +4573,20 @@ export namespace Prisma {
   };
 
   export type ApplicationScalarFieldEnum = (typeof ApplicationScalarFieldEnum)[keyof typeof ApplicationScalarFieldEnum]
+
+
+  export const CachedJobScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    company: 'company',
+    location: 'location',
+    date: 'date',
+    url: 'url',
+    logo: 'logo',
+    cachedAt: 'cachedAt'
+  };
+
+  export type CachedJobScalarFieldEnum = (typeof CachedJobScalarFieldEnum)[keyof typeof CachedJobScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -3772,6 +4911,73 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Application"> | Date | string
   }
 
+  export type CachedJobWhereInput = {
+    AND?: CachedJobWhereInput | CachedJobWhereInput[]
+    OR?: CachedJobWhereInput[]
+    NOT?: CachedJobWhereInput | CachedJobWhereInput[]
+    id?: StringFilter<"CachedJob"> | string
+    title?: StringFilter<"CachedJob"> | string
+    company?: StringFilter<"CachedJob"> | string
+    location?: StringFilter<"CachedJob"> | string
+    date?: StringFilter<"CachedJob"> | string
+    url?: StringFilter<"CachedJob"> | string
+    logo?: StringNullableFilter<"CachedJob"> | string | null
+    cachedAt?: DateTimeFilter<"CachedJob"> | Date | string
+  }
+
+  export type CachedJobOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    company?: SortOrder
+    location?: SortOrder
+    date?: SortOrder
+    url?: SortOrder
+    logo?: SortOrderInput | SortOrder
+    cachedAt?: SortOrder
+  }
+
+  export type CachedJobWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: CachedJobWhereInput | CachedJobWhereInput[]
+    OR?: CachedJobWhereInput[]
+    NOT?: CachedJobWhereInput | CachedJobWhereInput[]
+    title?: StringFilter<"CachedJob"> | string
+    company?: StringFilter<"CachedJob"> | string
+    location?: StringFilter<"CachedJob"> | string
+    date?: StringFilter<"CachedJob"> | string
+    url?: StringFilter<"CachedJob"> | string
+    logo?: StringNullableFilter<"CachedJob"> | string | null
+    cachedAt?: DateTimeFilter<"CachedJob"> | Date | string
+  }, "id">
+
+  export type CachedJobOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    company?: SortOrder
+    location?: SortOrder
+    date?: SortOrder
+    url?: SortOrder
+    logo?: SortOrderInput | SortOrder
+    cachedAt?: SortOrder
+    _count?: CachedJobCountOrderByAggregateInput
+    _max?: CachedJobMaxOrderByAggregateInput
+    _min?: CachedJobMinOrderByAggregateInput
+  }
+
+  export type CachedJobScalarWhereWithAggregatesInput = {
+    AND?: CachedJobScalarWhereWithAggregatesInput | CachedJobScalarWhereWithAggregatesInput[]
+    OR?: CachedJobScalarWhereWithAggregatesInput[]
+    NOT?: CachedJobScalarWhereWithAggregatesInput | CachedJobScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"CachedJob"> | string
+    title?: StringWithAggregatesFilter<"CachedJob"> | string
+    company?: StringWithAggregatesFilter<"CachedJob"> | string
+    location?: StringWithAggregatesFilter<"CachedJob"> | string
+    date?: StringWithAggregatesFilter<"CachedJob"> | string
+    url?: StringWithAggregatesFilter<"CachedJob"> | string
+    logo?: StringNullableWithAggregatesFilter<"CachedJob"> | string | null
+    cachedAt?: DateTimeWithAggregatesFilter<"CachedJob"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     clerkId: string
@@ -3994,6 +5200,83 @@ export namespace Prisma {
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CachedJobCreateInput = {
+    id: string
+    title: string
+    company: string
+    location: string
+    date: string
+    url: string
+    logo?: string | null
+    cachedAt?: Date | string
+  }
+
+  export type CachedJobUncheckedCreateInput = {
+    id: string
+    title: string
+    company: string
+    location: string
+    date: string
+    url: string
+    logo?: string | null
+    cachedAt?: Date | string
+  }
+
+  export type CachedJobUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    company?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    date?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    logo?: NullableStringFieldUpdateOperationsInput | string | null
+    cachedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CachedJobUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    company?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    date?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    logo?: NullableStringFieldUpdateOperationsInput | string | null
+    cachedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CachedJobCreateManyInput = {
+    id: string
+    title: string
+    company: string
+    location: string
+    date: string
+    url: string
+    logo?: string | null
+    cachedAt?: Date | string
+  }
+
+  export type CachedJobUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    company?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    date?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    logo?: NullableStringFieldUpdateOperationsInput | string | null
+    cachedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CachedJobUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    company?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    date?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    logo?: NullableStringFieldUpdateOperationsInput | string | null
+    cachedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -4312,6 +5595,39 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type CachedJobCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    company?: SortOrder
+    location?: SortOrder
+    date?: SortOrder
+    url?: SortOrder
+    logo?: SortOrder
+    cachedAt?: SortOrder
+  }
+
+  export type CachedJobMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    company?: SortOrder
+    location?: SortOrder
+    date?: SortOrder
+    url?: SortOrder
+    logo?: SortOrder
+    cachedAt?: SortOrder
+  }
+
+  export type CachedJobMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    company?: SortOrder
+    location?: SortOrder
+    date?: SortOrder
+    url?: SortOrder
+    logo?: SortOrder
+    cachedAt?: SortOrder
   }
 
   export type ApplicationCreateNestedManyWithoutUserInput = {

@@ -152,6 +152,17 @@ exports.Prisma.ApplicationScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.CachedJobScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  company: 'company',
+  location: 'location',
+  date: 'date',
+  url: 'url',
+  logo: 'logo',
+  cachedAt: 'cachedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -187,7 +198,8 @@ exports.ApplicationType = exports.$Enums.ApplicationType = {
 
 exports.Prisma.ModelName = {
   User: 'User',
-  Application: 'Application'
+  Application: 'Application',
+  CachedJob: 'CachedJob'
 };
 
 /**
