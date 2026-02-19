@@ -24,12 +24,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 7.3.0
- * Query Engine version: 9d6ad21cbbceab97458517b147a6a09ff43aa735
+ * Prisma Client JS version: 7.4.0
+ * Query Engine version: ab56fe763f921d033a6c195e7ddeb3e255bdbb57
  */
 Prisma.prismaVersion = {
-  client: "7.3.0",
-  engine: "9d6ad21cbbceab97458517b147a6a09ff43aa735"
+  client: "7.4.0",
+  engine: "ab56fe763f921d033a6c195e7ddeb3e255bdbb57"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -128,7 +128,8 @@ exports.Prisma.UserScalarFieldEnum = {
   middleName: 'middleName',
   lastName: 'lastName',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  reminders: 'reminders'
 };
 
 exports.Prisma.ApplicationScalarFieldEnum = {
@@ -148,6 +149,9 @@ exports.Prisma.ApplicationScalarFieldEnum = {
   interviewDnT: 'interviewDnT',
   salary: 'salary',
   logoUrl: 'logoUrl',
+  enableReminder: 'enableReminder',
+  reminderInterval: 'reminderInterval',
+  expirationDate: 'expirationDate',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -161,6 +165,13 @@ exports.Prisma.CachedJobScalarFieldEnum = {
   url: 'url',
   logo: 'logo',
   cachedAt: 'cachedAt'
+};
+
+exports.Prisma.ReminderScalarFieldEnum = {
+  id: 'id',
+  applicationId: 'applicationId',
+  lastSentAt: 'lastSentAt',
+  nextSendAt: 'nextSendAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -199,7 +210,8 @@ exports.ApplicationType = exports.$Enums.ApplicationType = {
 exports.Prisma.ModelName = {
   User: 'User',
   Application: 'Application',
-  CachedJob: 'CachedJob'
+  CachedJob: 'CachedJob',
+  Reminder: 'Reminder'
 };
 
 /**

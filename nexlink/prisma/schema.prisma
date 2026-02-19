@@ -39,30 +39,35 @@ model User {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   applications Application[]
+  reminders   Boolean @default(false)
   @@map("users")
 }
 
 model Application {
-  id            Int      @id @default(autoincrement())
-  userId        String
-  companyName   String
-  jobTitle      String
-  status        ApplicationStatus
-  mode          WorkMode 
-  website       String?
-  jobUrl        String?
-  description   String
-  email         String
-  location      String
-  type          ApplicationType
-  notes         String?
-  interviewDnT  DateTime?
-  salary        String?
-  logoUrl       String?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id              Int      @id @default(autoincrement())
+  userId          String
+  companyName     String
+  jobTitle        String
+  status          ApplicationStatus
+  mode            WorkMode 
+  website         String?
+  jobUrl          String?
+  description     String
+  email           String
+  location        String
+  type            ApplicationType
+  notes           String?
+  interviewDnT    DateTime?
+  salary          String?
+  logoUrl         String?
+  enableReminder  Boolean  @default(false)
+  reminderInterval Int     @default(3)
+  expirationDate  DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  reminders       Reminder[]
 
-  user          User    @relation(fields: [userId], references: [id])
+  user            User     @relation(fields: [userId], references: [id])
 
   @@map("applications")
 }
@@ -78,5 +83,16 @@ model CachedJob {
   cachedAt      DateTime @default(now())
 
   @@map("cached_jobs")
+}
+
+model Reminder {
+  id            Int      @id @default(autoincrement())
+  applicationId Int      @unique
+  lastSentAt    DateTime?
+  nextSendAt    DateTime?
+
+  application   Application @relation(fields: [applicationId], references: [id])
+
+  @@map("reminders")
 }
 

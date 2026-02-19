@@ -21,6 +21,7 @@ import {
   FiTrash2,
 } from "react-icons/fi";
 import { MdAttachMoney } from "react-icons/md";
+import { Bell } from "lucide-react";
 
 interface ApplicationDetailModalProps {
   open: boolean;
@@ -41,6 +42,9 @@ interface ApplicationDetailModalProps {
     location?: string | null;
     salary?: string | null;
     logoUrl?: string | null;
+    enableReminder?: boolean;
+    reminderInterval?: number;
+    expirationDate?: Date | null;
   } | null;
   onEdit?: (id: number) => void;
   onDelete?: (id: number) => void;
@@ -181,6 +185,45 @@ export function ApplicationDetailModal({
                     },
                   )}
                 </span>
+              </div>
+            </div>
+          )}
+
+          {(application.expirationDate || application.enableReminder) && (
+            <div className="space-y-2">
+              <h4 className="text-sm font-semibold text-foreground">
+                Reminder
+              </h4>
+              <div className="grid grid-cols-2 gap-3">
+                {application.expirationDate && (
+                  <div className="flex items-center gap-2 text-sm p-3 rounded-lg bg-muted/50">
+                    <FiCalendar className="w-4 h-4 text-muted-foreground shrink-0" />
+                    <div className="flex flex-col">
+                      <span className="text-xs text-muted-foreground">Expires</span>
+                      <span className="truncate">
+                        {new Date(application.expirationDate).toLocaleDateString(
+                          "en-US",
+                          {
+                            month: "short",
+                            day: "numeric",
+                            year: "numeric",
+                          },
+                        )}
+                      </span>
+                    </div>
+                  </div>
+                )}
+                {application.enableReminder && (
+                  <div className="flex items-center gap-2 text-sm p-3 rounded-lg bg-muted/50">
+                    <Bell className="w-4 h-4 text-muted-foreground shrink-0" />
+                    <div className="flex flex-col">
+                      <span className="text-xs text-muted-foreground">Reminder</span>
+                      <span className="truncate">
+                        {application.reminderInterval ?? 3} day{((application.reminderInterval ?? 3) > 1) ? "s" : ""} before
+                      </span>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           )}

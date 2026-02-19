@@ -20,6 +20,9 @@ export type Application = {
   location?: string | null;
   salary?: string | null;
   logoUrl?: string | null;
+  enableReminder?: boolean;
+  reminderInterval?: number;
+  expirationDate?: Date | null;
 };
 
 export type status =

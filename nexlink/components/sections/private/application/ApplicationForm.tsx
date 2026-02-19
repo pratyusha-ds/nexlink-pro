@@ -17,6 +17,7 @@ import { createApplication, updateApplication } from "@/lib/actions/application"
 
 import CompanySection from "./CompanySection";
 import StatusSection from "./StatusSection";
+import ReminderSection from "./ReminderSection";
 
 interface ApplicationFormProps {
   defaultValues?: Partial<ApplicationFormValues>;
@@ -46,6 +47,9 @@ export default function ApplicationForm({ defaultValues, id }: ApplicationFormPr
       status: "PENDING",
       type: "REGULAR",
       mode: "REMOTE",
+      enableReminder: false,
+      reminderInterval: 3,
+      expirationDate: null,
       ...defaultValues,
     },
   });
@@ -80,6 +84,7 @@ export default function ApplicationForm({ defaultValues, id }: ApplicationFormPr
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <CompanySection form={form} />
             <StatusSection form={form} />
+            <ReminderSection form={form} />
 
             <div className="flex justify-end gap-4">
               <Button
