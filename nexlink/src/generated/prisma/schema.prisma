@@ -67,3 +67,16 @@ model Application {
 
   @@map("applications")
 }
+
+model CachedJob {
+  id       String   @id
+  title    String
+  company  String
+  location String
+  date     String
+  url      String
+  logo     String?
+  cachedAt DateTime @default(now())
+
+  @@map("cached_jobs")
+}

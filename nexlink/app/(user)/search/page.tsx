@@ -1,4 +1,4 @@
-import { searchJobs } from "@/lib/theirstack";
+import { initializeJobList, searchJobs } from "@/lib/theirstack";
 import { MOCK_JOBS } from "@/lib/mock-jobs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,7 +10,7 @@ export default async function SearchPage({
   searchParams: Promise<{ q?: string }>;
 }) {
   const { q: query } = await searchParams;
-  const results = await searchJobs(query);
+  const results = query ? await searchJobs(query) : await initializeJobList();
 
   const isMockMode = JSON.stringify(results) === JSON.stringify(MOCK_JOBS);
 
