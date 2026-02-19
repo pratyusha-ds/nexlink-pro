@@ -135,6 +135,7 @@ function ApplicationsContent({
           const data = await getApplications();
           setApplications(data);
         }}
+        createHref="applications/create"
       />
 
       <ApplicationDetailModal

@@ -18,7 +18,13 @@ import {
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 import { useClerk, useSession } from "@clerk/nextjs";
-import { Home, Briefcase, Search, Settings, LogOut } from "lucide-react";
+import {
+  Home,
+  Briefcase,
+  LogOut,
+  AlertOctagonIcon,
+  Search,
+} from "lucide-react";
 import Logo from "@/public/Logo";
 import {
   Dialog,
@@ -51,9 +57,9 @@ const items = [
     icon: Search,
   },
   {
-    title: "Settings",
-    url: "/settings",
-    icon: Settings,
+    title: "Reminders",
+    url: "/reminders",
+    icon: AlertOctagonIcon,
   },
 ];
 

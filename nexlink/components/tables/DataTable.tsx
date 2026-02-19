@@ -55,6 +55,7 @@ interface DataTableProps<TData, TValue> {
   onDelete?: (rows: TData[]) => void;
   onView?: (row: TData) => void;
   onStatusChange?: (id: number, status: string) => void;
+  createHref?: string;
 }
 
 export function DataTable<TData, TValue>({
@@ -66,6 +67,7 @@ export function DataTable<TData, TValue>({
   onDelete,
   onView,
   onStatusChange,
+  createHref,
 }: DataTableProps<TData, TValue>) {
   const router = useRouter();
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -206,9 +208,9 @@ export function DataTable<TData, TValue>({
           />
         ) : null}
 
-        {!isSelectionMode && (
+        {!isSelectionMode && createHref && (
           <Button
-            onClick={() => router.push("/applications/create")}
+            onClick={() => router.push(createHref)}
             className="ml-auto"
           >
             Create

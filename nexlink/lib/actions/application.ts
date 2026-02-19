@@ -48,6 +48,9 @@ export const createApplication = async (data: ApplicationFormValues) => {
       notes: validatedForm.notes || null,
       salary: validatedForm.salary || null,
       interviewDnT: validatedForm.interviewDnT || null,
+      enableReminder: validatedForm.enableReminder,
+      reminderInterval: validatedForm.reminderInterval,
+      expirationDate: validatedForm.expirationDate || null,
     },
   });
 
@@ -99,6 +102,9 @@ export const updateApplication = async (
       notes: validatedForm.notes ?? application.notes,
       salary: validatedForm.salary ?? application.salary,
       interviewDnT: validatedForm.interviewDnT ?? application.interviewDnT,
+      enableReminder: validatedForm.enableReminder ?? application.enableReminder,
+      reminderInterval: validatedForm.reminderInterval ?? application.reminderInterval,
+      expirationDate: validatedForm.expirationDate ?? application.expirationDate,
     },
   });
 

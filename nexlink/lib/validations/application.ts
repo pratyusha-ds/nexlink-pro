@@ -27,6 +27,9 @@ export const applicationSchema = z.object({
   notes: z.string().nullable().optional(),
   salary: z.string().nullable().optional(),
   interviewDnT: z.date().nullable().optional(),
+  enableReminder: z.boolean(),
+  reminderInterval: z.number().int().positive(),
+  expirationDate: z.date().nullable().optional(),
 });
 
 export type ApplicationFormValues = z.infer<typeof applicationSchema>;

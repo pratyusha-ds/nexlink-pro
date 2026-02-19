@@ -18,8 +18,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { FiMapPin, FiGlobe, FiMail, FiLink } from "react-icons/fi";
+import { FiMapPin, FiGlobe, FiMail, FiLink, FiCalendar } from "react-icons/fi";
 import { updateApplication } from "@/lib/actions/application";
+import { Switch } from "@/components/ui/switch";
 
 interface ApplicationEditModalProps {
   open: boolean;
@@ -39,6 +40,9 @@ interface ApplicationEditModalProps {
     email?: string | null;
     location?: string | null;
     logoUrl?: string | null;
+    enableReminder?: boolean;
+    reminderInterval?: number;
+    expirationDate?: Date | null;
   } | null;
   onSuccess?: () => void;
 }
@@ -62,6 +66,51 @@ const modeOptions = [
   { value: "HYBRID", label: "Hybrid" },
 ];
 
+const allIntervalOptions = [
+  { value: "1", label: "1 day before", days: 1 },
+  { value: "2", label: "2 days before", days: 2 },
+  { value: "3", label: "3 days before", days: 3 },
+  { value: "5", label: "5 days before", days: 5 },
+  { value: "7", label: "7 days before", days: 7 },
+  { value: "14", label: "14 days before", days: 14 },
+];
+
+function getDaysUntilExpiration(expirationDate: string): number {
+  if (!expirationDate) return 0;
+  
+  const now = new Date();
+  now.setHours(0, 0, 0, 0);
+  const expiration = new Date(expirationDate);
+  expiration.setHours(0, 0, 0, 0);
+  
+  return Math.ceil((expiration.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+}
+
+function getValidIntervals(expirationDate: string): typeof allIntervalOptions {
+  const daysUntil = getDaysUntilExpiration(expirationDate);
+  return allIntervalOptions.filter(opt => opt.days < daysUntil);
+}
+
+function calculateDefaultInterval(expirationDate: string): number {
+  const daysUntil = getDaysUntilExpiration(expirationDate);
+  
+  if (daysUntil <= 4) return 1;
+  if (daysUntil <= 6) return 2;
+  if (daysUntil <= 8) return 3;
+  if (daysUntil <= 15) return 5;
+  return 7;
+}
+
+function isValidForReminder(expirationDate: string): boolean {
+  return getDaysUntilExpiration(expirationDate) >= 3;
+}
+
+function getMinDate(): string {
+  const minDate = new Date();
+  minDate.setDate(minDate.getDate() + 3);
+  return minDate.toISOString().split("T")[0];
+}
+
 export function ApplicationEditModal({
   open,
   onOpenChange,
@@ -81,6 +130,9 @@ export function ApplicationEditModal({
     email: "",
     location: "",
     notes: "",
+    enableReminder: false,
+    reminderInterval: 3,
+    expirationDate: "",
   });
 
   useEffect(() => {
@@ -97,6 +149,11 @@ export function ApplicationEditModal({
         email: application.email ?? "",
         location: application.location ?? "",
         notes: application.notes ?? "",
+        enableReminder: application.enableReminder ?? false,
+        reminderInterval: application.reminderInterval ?? 3,
+        expirationDate: application.expirationDate
+          ? new Date(application.expirationDate).toISOString().split("T")[0]
+          : "",
       });
     }
   }, [application]);
@@ -117,6 +174,11 @@ export function ApplicationEditModal({
         email: application.email ?? "",
         location: application.location ?? "",
         notes: application.notes ?? "",
+        enableReminder: application.enableReminder ?? false,
+        reminderInterval: application.reminderInterval ?? 3,
+        expirationDate: application.expirationDate
+          ? new Date(application.expirationDate).toISOString().split("T")[0]
+          : "",
       });
     }
     onOpenChange(isOpen);
@@ -137,6 +199,11 @@ export function ApplicationEditModal({
         email: formData.email || undefined,
         location: formData.location || undefined,
         notes: formData.notes || undefined,
+        enableReminder: formData.enableReminder,
+        reminderInterval: formData.reminderInterval,
+        expirationDate: formData.expirationDate
+          ? new Date(formData.expirationDate)
+          : null,
       });
       onSuccess?.();
     } catch (error) {
@@ -145,6 +212,43 @@ export function ApplicationEditModal({
       setIsSaving(false);
     }
   };
+
+  const handleExpirationDateChange = (value: string) => {
+    const newFormData = { ...formData, expirationDate: value };
+    
+    if (value && formData.enableReminder) {
+      if (!isValidForReminder(value)) {
+        newFormData.enableReminder = false;
+        newFormData.reminderInterval = 3;
+      } else {
+        const validIntervals = getValidIntervals(value);
+        const currentInterval = formData.reminderInterval;
+        const isValid = validIntervals.some(opt => opt.days === currentInterval);
+        
+        if (!isValid && validIntervals.length > 0) {
+          newFormData.reminderInterval = validIntervals[validIntervals.length - 1].days;
+        }
+      }
+    }
+    
+    setFormData(newFormData);
+  };
+
+  const handleEnableReminderChange = (enabled: boolean) => {
+    if (enabled && !isValidForReminder(formData.expirationDate)) {
+      return;
+    }
+    
+    const newFormData = { ...formData, enableReminder: enabled };
+    
+    if (enabled && formData.expirationDate) {
+      newFormData.reminderInterval = calculateDefaultInterval(formData.expirationDate);
+    }
+    
+    setFormData(newFormData);
+  };
+
+  const canEnableReminder = isValidForReminder(formData.expirationDate);
 
   return (
     <Dialog open={open} onOpenChange={handleOpen}>
@@ -174,7 +278,7 @@ export function ApplicationEditModal({
                 onChange={(e) =>
                   setFormData({ ...formData, companyName: e.target.value })
                 }
-                className="text-lg font-semibold"
+                className="text-lg font-semibold shadow-none border-gray-200"
                 placeholder="Company Name"
               />
               <Input
@@ -182,7 +286,7 @@ export function ApplicationEditModal({
                 onChange={(e) =>
                   setFormData({ ...formData, jobTitle: e.target.value })
                 }
-                className="text-lg font-semibold"
+                className="text-lg font-semibold shadow-none border-gray-200"
                 placeholder="Job Title"
               />
               <div className="flex flex-wrap gap-1.5">
@@ -192,7 +296,7 @@ export function ApplicationEditModal({
                     setFormData({ ...formData, status: value })
                   }
                 >
-                  <SelectTrigger className="w-35 h-8">
+                  <SelectTrigger className="w-35 h-8 shadow-none border-gray-200">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -209,7 +313,7 @@ export function ApplicationEditModal({
                     setFormData({ ...formData, type: value })
                   }
                 >
-                  <SelectTrigger className="w-25 h-8">
+                  <SelectTrigger className="w-25 h-8 shadow-none border-gray-200">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -226,7 +330,7 @@ export function ApplicationEditModal({
                     setFormData({ ...formData, mode: value })
                   }
                 >
-                  <SelectTrigger className="w-25 h-8">
+                  <SelectTrigger className="w-25 h-8 shadow-none border-gray-200">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -289,11 +393,11 @@ export function ApplicationEditModal({
                 setFormData({ ...formData, description: e.target.value })
               }
               placeholder="Job description"
-              className="resize-none h-24"
+              className="resize-none h-24 shadow-none border-gray-200"
             />
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 p-3 rounded-lg border border-gray-200">
             <FiLink className="w-4 h-4 text-muted-foreground" />
             <Input
               value={formData.jobUrl}
@@ -301,8 +405,56 @@ export function ApplicationEditModal({
                 setFormData({ ...formData, jobUrl: e.target.value })
               }
               placeholder="Job URL"
-              className="border-0 bg-transparent p-0 h-auto focus-visible:ring-0"
+              className="border-0 bg-transparent p-0 h-auto focus-visible:ring-0 shadow-none"
             />
+          </div>
+
+          <div className="space-y-3">
+            <h4 className="text-sm font-semibold text-foreground">Reminder</h4>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="flex items-center gap-2 text-sm p-3 rounded-lg bg-muted/50">
+                <FiCalendar className="w-4 h-4 text-muted-foreground shrink-0" />
+                <Input
+                  type="date"
+                  min={getMinDate()}
+                  value={formData.expirationDate}
+                  onChange={(e) => handleExpirationDateChange(e.target.value)}
+                  className="border-0 bg-transparent p-0 h-auto focus-visible:ring-0"
+                />
+              </div>
+              <div className="flex flex-row items-center justify-between rounded-lg bg-muted/50 p-3">
+                <div className="space-y-0.5">
+                  <p className="text-sm font-medium">Enable</p>
+                  {!canEnableReminder && formData.expirationDate && (
+                    <p className="text-xs text-muted-foreground">Min 3 days</p>
+                  )}
+                </div>
+                <Switch
+                  checked={formData.enableReminder}
+                  onCheckedChange={handleEnableReminderChange}
+                  disabled={!canEnableReminder}
+                />
+              </div>
+            </div>
+            {formData.enableReminder && (
+              <Select
+                value={String(formData.reminderInterval)}
+                onValueChange={(value) =>
+                  setFormData({ ...formData, reminderInterval: Number(value) })
+                }
+              >
+                <SelectTrigger className="w-full shadow-none border-gray-200">
+                  <SelectValue placeholder="Select interval" />
+                </SelectTrigger>
+                <SelectContent>
+                  {getValidIntervals(formData.expirationDate).map((opt) => (
+                    <SelectItem key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -313,7 +465,7 @@ export function ApplicationEditModal({
                 setFormData({ ...formData, notes: e.target.value })
               }
               placeholder="Add notes..."
-              className="resize-none h-24"
+              className="resize-none h-24 shadow-none border-gray-200"
             />
           </div>
         </div>
