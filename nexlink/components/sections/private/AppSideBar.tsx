@@ -110,7 +110,10 @@ export function AppSidebar() {
     <Sidebar className="border-none drop-shadow-sm">
       <SidebarHeader>
         <SidebarMenu className="flex ">
-          <div className="p-4 flex items-center gap-4">
+          <Link
+            href="/"
+            className="p-4 flex items-center gap-4 hover:opacity-80 transition-opacity"
+          >
             <Logo />
             <span className="calistoga tracking-widest">
               <p>
@@ -119,7 +122,7 @@ export function AppSidebar() {
               </p>
               Dashboard
             </span>
-          </div>
+          </Link>
         </SidebarMenu>
         <SidebarSeparator />
       </SidebarHeader>
