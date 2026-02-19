@@ -147,12 +147,7 @@ export async function updateApplicationStatus(id: number, status: string) {
   });
 }
 
-export async function getReminders(useMock = false) {
-  if (useMock) {
-    const { mockReminders } = await import("./mock-reminders");
-    return mockReminders;
-  }
-
+export async function getReminders() {
   const userId = await getCurrentUserId();
   if (!userId) return [];
 

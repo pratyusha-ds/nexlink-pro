@@ -61,7 +61,7 @@ function RemindersContent() {
   const [remindersEnabled, setRemindersEnabled] = useState(true);
 
   useEffect(() => {
-    Promise.all([getReminders(true), getUserRemindersSetting()]).then(
+    Promise.all([getReminders(), getUserRemindersSetting()]).then(
       ([remindersData, setting]) => {
         setReminders(remindersData);
         setRemindersEnabled(setting);
