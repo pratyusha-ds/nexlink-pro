@@ -36,7 +36,7 @@ export function StatusPie({ data }: { data: any[] }) {
     <div className="flex flex-col">
       <ChartContainer
         config={chartConfig}
-        className="mx-auto aspect-square max-h-60 w-full"
+        className="mx-auto aspect-square h-80 w-full"
       >
         <PieChart>
           <ChartTooltip content={<ChartTooltipContent hideLabel />} />
@@ -44,7 +44,7 @@ export function StatusPie({ data }: { data: any[] }) {
             data={formattedData}
             dataKey="total"
             nameKey="status"
-            innerRadius={35}
+            innerRadius={70}
             strokeWidth={4}
           >
             {formattedData.map((entry, index) => (

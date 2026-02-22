@@ -4,7 +4,7 @@ import "./globals.css";
 import { inter, caladea, calistoga } from "./fonts";
 
 export const metadata: Metadata = {
-  title: "NexLink",
+  title: "NexLink - Job Application Tracker",
   description: "A job finding site",
 };
 

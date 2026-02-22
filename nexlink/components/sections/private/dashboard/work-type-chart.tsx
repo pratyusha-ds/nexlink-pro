@@ -20,7 +20,7 @@ interface WorkTypeData {
 export function WorkTypeBar({ data }: { data: WorkTypeData[] }) {
   return (
     <div className="flex flex-col">
-      <ChartContainer config={chartConfig} className="w-full h-60">
+      <ChartContainer config={chartConfig} className="w-full h-80">
         <BarChart data={data} margin={{ top: 10 }}>
           <CartesianGrid vertical={false} strokeDasharray="3 3" opacity={0.4} />
           <XAxis
