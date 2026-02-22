@@ -120,6 +120,22 @@ export async function getTypeStats() {
   }));
 }
 
+export async function getModeStats() {
+  const userId = await getCurrentUserId();
+  if (!userId) return [];
+
+  const stats = await db.application.groupBy({
+    by: ["mode"],
+    where: { userId },
+    _count: { type: true },
+  });
+
+  return stats.map((item) => ({
+    name: item.mode,
+    value: item._count.type,
+  }));
+}
+
 export async function deleteApplications(ids: number[]) {
   const userId = await getCurrentUserId();
   if (!userId) return;
@@ -189,7 +205,10 @@ export async function getReminders() {
   }));
 }
 
-export async function updateReminderEnable(applicationId: number, enable: boolean) {
+export async function updateReminderEnable(
+  applicationId: number,
+  enable: boolean,
+) {
   const userId = await getCurrentUserId();
   if (!userId) return null;
 

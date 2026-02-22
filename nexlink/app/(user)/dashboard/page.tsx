@@ -1,10 +1,12 @@
 import { StatusPie } from "@/components/sections/private/dashboard/status-pie-chart";
 import { WorkTypeBar } from "@/components/sections/private/dashboard/work-type-chart";
+import { WorkModeChart } from "@/components/sections/private/dashboard/work-mode-chart";
 import { StatsCards } from "@/components/sections/private/dashboard/stats-cards";
 import {
   getRecentApplications,
   getStatusStats,
   getTypeStats,
+  getModeStats,
 } from "@/lib/data";
 import UserPage from "@/components/page/UserPage";
 import {
@@ -26,52 +28,65 @@ const statusColorMap: Record<string, string> = {
 };
 
 export default async function DashboardPage() {
-  const [recentApps, statusStats, typeStats] = await Promise.all([
+  const [recentApps, statusStats, typeStats, modeStats] = await Promise.all([
     getRecentApplications(),
     getStatusStats(),
     getTypeStats(),
+    getModeStats(),
   ]);
 
   return (
     <UserPage title="Dashboard">
-      <div className="space-y-8">
+      <div className="flex flex-col gap-8 flex-1">
         <StatsCards data={statusStats} />
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2 space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-white rounded-md border border-gray-200 p-5">
-                <h3 className="text-base font-semibold text-gray-900 mb-4">
-                  Status Overview
-                </h3>
-                {statusStats.length > 0 ? (
-                  <StatusPie data={statusStats} />
-                ) : (
-                  <EmptyState
-                    icon={PieChart}
-                    title="No data yet"
-                    description="Your application status will appear here."
-                  />
-                )}
-              </div>
-              <div className="bg-white rounded-md border border-gray-200 p-5">
-                <h3 className="text-base font-semibold text-gray-900 mb-4">
-                  Work Preferences
-                </h3>
-                {typeStats.length > 0 ? (
-                  <WorkTypeBar data={typeStats} />
-                ) : (
-                  <EmptyState
-                    icon={BarChart3}
-                    title="No data yet"
-                    description="Your work type preferences will appear here."
-                  />
-                )}
-              </div>
+        <div className="flex flex-col gap-6 flex-1">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 min-h-100">
+            <div className="bg-white rounded-md border border-gray-200 p-5">
+              <h3 className="text-base font-semibold text-gray-900 mb-4">
+                Status Overview
+              </h3>
+              {statusStats.length > 0 ? (
+                <StatusPie data={statusStats} />
+              ) : (
+                <EmptyState
+                  icon={PieChart}
+                  title="No data yet"
+                  description="Your application status will appear here."
+                />
+              )}
+            </div>
+            <div className="bg-white rounded-md border border-gray-200 p-5">
+              <h3 className="text-base font-semibold text-gray-900 mb-4">
+                Job Type
+              </h3>
+              {typeStats.length > 0 ? (
+                <WorkTypeBar data={typeStats} />
+              ) : (
+                <EmptyState
+                  icon={BarChart3}
+                  title="No data yet"
+                  description="Your job type preferences will appear here."
+                />
+              )}
+            </div>
+            <div className="bg-white rounded-md border border-gray-200 p-5">
+              <h3 className="text-base font-semibold text-gray-900 mb-4">
+                Work Arrangement
+              </h3>
+              {modeStats.length > 0 ? (
+                <WorkModeChart data={modeStats} />
+              ) : (
+                <EmptyState
+                  icon={BarChart3}
+                  title="No data yet"
+                  description="Your work arrangement preferences will appear here."
+                />
+              )}
             </div>
           </div>
 
-          <div className="bg-white rounded-md border border-gray-200 p-5">
+          <div className="bg-white rounded-md border border-gray-200 p-5 flex-1 min-h-80 max-h-120">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-base font-semibold text-gray-900">
                 Recent Applications
@@ -86,7 +101,7 @@ export default async function DashboardPage() {
               )}
             </div>
             {recentApps.length > 0 ? (
-              <div className="space-y-1">
+              <div className="flex flex-col gap-2">
                 {recentApps.slice(0, 5).map((app) => (
                   <div
                     key={app.id}
