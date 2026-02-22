@@ -78,7 +78,7 @@ export default async function DashboardPage() {
               </h3>
               {recentApps.length > 0 && (
                 <Link
-                  href="/applications/create"
+                  href="/applications"
                   className="text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1"
                 >
                   View all <ArrowRight className="h-4 w-4" />
@@ -93,9 +93,8 @@ export default async function DashboardPage() {
                     className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors"
                   >
                     <div
-                      className={`h-2 w-2 rounded-full shrink-0 ${
-                        statusColorMap[app.status] || "bg-gray-400"
-                      }`}
+                      className={`h-2 w-2 rounded-full shrink-0 ${statusColorMap[app.status] || "bg-gray-400"
+                        }`}
                     />
                     <div className="flex items-center gap-2 min-w-0 flex-1">
                       <Building2 className="h-4 w-4 text-gray-400 shrink-0" />
