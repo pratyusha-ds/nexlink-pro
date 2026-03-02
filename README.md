@@ -1,18 +1,21 @@
-# NexLink
+# NexLink Pro (Extended Edition)
 
 <p align="left">
   <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="Next.js" />
   <img src="https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white" alt="Prisma" />
   <img src="https://img.shields.io/badge/Clerk-6C47FF?style=for-the-badge&logo=clerk&logoColor=white" alt="Clerk" />
-
   <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel" />
 </p>
 
-[![Deployment Status](https://deploy-badge.vercel.app/?url=https://nexlink-dashboard.vercel.app&name=NexLink)](https://nexlink-dashboard.vercel.app)
-
 A trusted platform that helps students and early-career professionals move from education to employment through structured internship discovery, preparation, and community support.
 
-[**Visit Nexlink »**](https://nexlink-dashboard.vercel.app)
+| Technical Extension                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| This repository is a technical extension of my [**NexLink**](https://github.com/pratyusha-ds/nexlink) project, a collaborative web app I co-developed as a member of the **NexLink Team** during [**Chingu Voyage 59**](https://github.com/chingu-voyages/V59-tier3-team-31). <br><br> **Development Focus:** While the core application remains live and maintained by the team, this fork serves as a dedicated environment for implementing DevOps practices, including containerization with Docker. |
+
+Current Extended Version:
+
+Original Team Production: [**Nexlink »**](https://nexlink-dashboard.vercel.app)
 
 ---
 
@@ -85,11 +88,11 @@ graph TD
 
 1.  **Clone & Install:**
 
-    Visit the repo here: [https://github.com/chingu-voyages/V59-tier3-team-31](https://github.com/chingu-voyages/V59-tier3-team-31)
+    Visit the repo here: [https://github.com/pratyusha-ds/nexlink-pro](https://github.com/pratyusha-ds/nexlink-pro)
 
     ```
     git clone https://github.com/chingu-voyages/V59-tier3-team-31.git
-    cd nexlink
+    cd nexlink-pro
     npm install
 
     ```
@@ -109,7 +112,7 @@ graph TD
 
     - `RESEND_API_KEY`= (From Resend)
 
-    - `EMAIL_FROM`= NexLink <onboarding@resend.dev>
+    - `EMAIL_FROM`= NexLink Pro <onboarding@resend.dev>
 
     - `CRON_SECRET`= (Create a random string to secure your cron routes)
 
@@ -130,7 +133,7 @@ graph TD
 
 ## Created By
 
-This project was envisioned and developed by the **Nexlink Team** as part of **Voyage 59** of the [**Chingu**](https://www.chingu.io/) Voyage.
+The original project was envisioned and developed by the **Nexlink Team** as part of **Voyage 59** of the [**Chingu**](https://www.chingu.io/) Voyage.
 
 | Name                     | Role          | Links                                                                                                        |
 | :----------------------- | :------------ | :----------------------------------------------------------------------------------------------------------- |
